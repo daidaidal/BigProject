@@ -39,7 +39,7 @@
                         <Insets left="70.0" />
                      </HBox.margin>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="注册">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handlesignin" text="注册">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>

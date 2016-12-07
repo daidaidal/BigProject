@@ -31,7 +31,6 @@ public class mainviewcontroller {
 	@FXML
 	private Label friendsemailLabel;
 	
-	private Person solo;
 	private Person person;
 	private Stage mainStage;
 	private MainApp mainapp;
@@ -79,12 +78,7 @@ public class mainviewcontroller {
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
-    		
-    		//1对1聊天
-    		solo.setName(name);
-    		solo.setId(person.getId());
-    		solo.setCompany(company);
-    		solo.setEmail(email);
+    	
     		
     	} else {
     		// Person is null, remove all the text.

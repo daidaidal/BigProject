@@ -2,6 +2,7 @@ package control;
 import view.editcontroller;
 import view.logincontroller;
 import view.mainviewcontroller;
+import view.signincontroller;
 import model.Person;
 import java.io.IOException;
 
@@ -64,7 +65,30 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-
+    public void showsignin()
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/signin.fxml"));
+			AnchorPane signpane = (AnchorPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage signStage = new Stage();
+			signStage.setTitle("signin");
+			signStage.initModality(Modality.WINDOW_MODAL);
+			signStage.initOwner(primaryStage);
+			Scene scene = new Scene(signpane);
+			signStage.setScene(scene);
+			// Set the person into the controller.
+			signincontroller controller = loader.getController();
+			controller.setStage(signStage);
+			// Show the dialog and wait until the user closes it
+			signStage.showAndWait();;
+			
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void showmainview(Person person)
     {
     	try {

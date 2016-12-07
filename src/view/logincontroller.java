@@ -29,9 +29,18 @@ public class logincontroller {
     }
 	
 	@FXML
+	private void handlesignin()
+	{
+		mainapp.showsignin();
+	}
+	@FXML
 	private void handlelogin()
 	{
 		LoginService log=new LoginService();
+		if(passwordField.getText()==null)
+			System.out.println("null");
+		else if(passwordField.getText()=="")
+			System.out.println("not null");
 		boolean judge=log.login(idField.getText(),passwordField.getText());
 		if(judge==true)
 		{
