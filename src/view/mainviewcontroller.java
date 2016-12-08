@@ -30,6 +30,8 @@ public class mainviewcontroller {
 	private Label friendscompanyLabel;
 	@FXML
 	private Label friendsemailLabel;
+	@FXML
+	private Label friendsidLabel;
 	
 	private Person person;
 	private Stage mainStage;
@@ -75,9 +77,11 @@ public class mainviewcontroller {
     		String name=person.getName();
     		String company=person.getCompany();
     		String email=person.getEmail();
+    		String id=person.getId();
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
+    		friendsidLabel.setText(id);
     	
     		
     	} else {
@@ -92,6 +96,11 @@ public class mainviewcontroller {
 	private void handleEdit()
 	{
 		mainapp.showeditview(person);
+	}
+	@FXML
+	private void handleAdd()
+	{
+		mainapp.showaddview(person);
 	}
 	
 }

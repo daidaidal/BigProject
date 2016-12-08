@@ -8,8 +8,10 @@ import java.sql.Statement;
 
 import org.controlsfx.dialog.Dialogs;
 
+import control.GetFriends;
 import control.LoginService;
 import control.MainApp;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -59,13 +61,36 @@ public class logincontroller {
 			 String email = rs.getString("email");
 			 String company = rs.getString("company");	
 			 String password = rs.getString("password");
+			 String friendsid=rs.getString("friendsid");
 			 Person person=new Person();
 			 person.setId(id);
 			 person.setName(name);
 			 person.setEmail(email);
 			 person.setCompany(company);
 			 person.setPassword(password);
+			 person.setFriendsid(friendsid);
 			 
+			 ObservableList<Person> friendsData=mainapp.getFriendsData();
+			 String[] friends=friendsid.split("@.@")[0].split("##"); //friends从0开始，qun从1开始
+			 if(friends.length>0)
+				 for(int i=1;i<friends.length;i++)
+				 {
+					 GetFriends f=new GetFriends();
+					 friendsData.add(f.Add_Friends_info(friends[i], false));
+				 }
+			 
+			 
+			 String[] quns=friendsid.split("@.@")[1].split("##");
+			 
+			 for(int i=1;i<quns.length;i++)
+			 {
+				 GetFriends f = new GetFriends();
+				 friendsData.add(f.Add_Friends_info(quns[i], true));
+			 }
+			 
+			 //加载好友或者群的信息
+			 
+			 mainapp.setFriendsData(friendsData);
 			 mainapp.showmainview(person);
 			}
 			connect.close();
@@ -89,8 +114,6 @@ public class logincontroller {
 	public void setMainApp(MainApp mainApp) {
         this.mainapp = mainApp;
     }
-	
-	
 	
 	
 }

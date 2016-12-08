@@ -1,5 +1,7 @@
 package control;
+import view.addcontroller;
 import view.editcontroller;
+import view.jianquncontroller;
 import view.logincontroller;
 import view.mainviewcontroller;
 import view.signincontroller;
@@ -23,17 +25,14 @@ public class MainApp extends Application {
     private Person person;
     
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
+    public void setFriendsData(ObservableList<Person> friendsData){
+    	this.friendsData=friendsData;
+    }
     public ObservableList<Person> getFriendsData() {
     	return friendsData;
     }
     public MainApp()
     {
-    	//id name company email
-    	friendsData.add(new Person("2","f","apple","a"));
-    	friendsData.add(new Person("3","s","google","g"));
-    	friendsData.add(new Person("4","t","microsoft","m"));
-    	friendsData.add(new Person("5","f","sansung","s"));
-    	friendsData.add(new Person("6","f","sony","s"));
     }
     @Override
     public void start(Stage primaryStage) {
@@ -91,6 +90,7 @@ public class MainApp extends Application {
     }
     public void showmainview(Person person)
     {
+    	this.person=person;
     	try {
     		primaryStage.close();
     		FXMLLoader loader = new FXMLLoader();
@@ -120,7 +120,6 @@ public class MainApp extends Application {
     {
     	try {
 			FXMLLoader loader = new FXMLLoader();
-			System.out.println(MainApp.class.getResource("../view/editinformation.fxml"));
 			loader.setLocation(MainApp.class.getResource("/view/editinformation.fxml"));
 			AnchorPane editpane = (AnchorPane) loader.load();
 			// Create the dialog Stage.
@@ -143,6 +142,55 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     	
+    }
+    public void showjianqunview(String id)
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/jianqun.fxml"));
+			AnchorPane editpane = (AnchorPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage jianqunStage = new Stage();
+			jianqunStage.setTitle("建群");
+			Scene scene = new Scene(editpane);
+			jianqunStage.setScene(scene);
+			// Set the person into the controller.
+			jianquncontroller controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setId(person.getId());
+			controller.setStage(jianqunStage);
+			// Show the dialog and wait until the user closes it
+			jianqunStage.show();
+			
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showaddview(Person person)
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/add.fxml"));
+			AnchorPane addpane = (AnchorPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage addStage = new Stage();
+			addStage.setTitle("add");
+			addStage.initModality(Modality.WINDOW_MODAL);
+			addStage.initOwner(primaryStage);
+			Scene scene = new Scene(addpane);
+			addStage.setScene(scene);
+			// Set the person into the controller.
+			addcontroller controller = loader.getController();
+			controller.setPerson(person);
+			controller.setMainApp(this);
+			// Show the dialog and wait until the user closes it
+			addStage.show();;
+			
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public Stage getPrimaryStage() {
         return primaryStage;

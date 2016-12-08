@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -20,9 +21,13 @@
                            <children>
                               <ImageView fitHeight="118.0" fitWidth="144.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
                               <Text fx:id="nameText" layoutX="192.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Button layoutX="182.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleEdit" text="编辑" />
+                              <Button layoutX="145.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleEdit" text="编辑" />
                               <Text fx:id="companyText" layoutX="192.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                               <Text fx:id="emailText" layoutX="192.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                              <Button layoutX="214.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleAdd" text="添加" />
+                              <Label layoutX="144.0" layoutY="14.0" text="名字" />
+                              <Label layoutX="144.0" layoutY="35.0" text="公司" />
+                              <Label layoutX="144.0" layoutY="56.0" text="email" />
                            </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="289.0">
@@ -44,12 +49,14 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="friendsnameLabel" layoutX="80.0" layoutY="19.0" text="Label" />
-                              <Label fx:id="friendscompanyLabel" layoutX="228.0" layoutY="19.0" prefHeight="20.0" prefWidth="86.0" text="Label" />
-                              <Label fx:id="friendsemailLabel" layoutX="353.0" layoutY="19.0" text="Label" />
-                              <Label layoutX="26.0" layoutY="19.0" text="name：" />
-                              <Label layoutX="146.0" layoutY="18.0" text="company：" />
-                              <Label layoutX="299.0" layoutY="19.0" text="email：" />
+                              <Label fx:id="friendsnameLabel" layoutX="62.0" layoutY="19.0" text="Label" />
+                              <Label fx:id="friendscompanyLabel" layoutX="274.0" layoutY="18.0" text="Label" />
+                              <Label fx:id="friendsemailLabel" layoutX="411.0" layoutY="19.0" text="Label" />
+                              <Label layoutX="26.0" layoutY="19.0" text="名字" />
+                              <Label layoutX="240.0" layoutY="18.0" text="公司" />
+                              <Label layoutX="364.0" layoutY="18.0" text="email" />
+                              <Label layoutX="141.0" layoutY="18.0" text="账号" />
+                              <Label fx:id="friendsidLabel" layoutX="180.0" layoutY="18.0" text="Label" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

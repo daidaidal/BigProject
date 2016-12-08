@@ -14,16 +14,43 @@ public class Person {
 	private  StringProperty company;
 	private  StringProperty email;
 	private  StringProperty password;
-	public Person(){
-		this("","","","");
-	}
-	public Person(String id,String name,String company,String email) {
-		this.id = new SimpleStringProperty(id);
+	private  StringProperty friendsid;
+	private  StringProperty membersid;
+	
+	public Person() {
+		this.id = new SimpleStringProperty("");
 		this.password = new SimpleStringProperty("");
-		this.name = new SimpleStringProperty(name);
-		this.company = new SimpleStringProperty(company);
-		this.email = new SimpleStringProperty(email);
+		this.name = new SimpleStringProperty("");
+		this.company = new SimpleStringProperty("");
+		this.email = new SimpleStringProperty("");
+		this.friendsid = new SimpleStringProperty("");
+		this.membersid = new SimpleStringProperty("");
 	}
+	public String getFriendsid() {
+		return friendsid.get();
+	}
+
+	public void setFriendsid(String friendsid) {
+		this.friendsid.set(friendsid);
+	}
+	
+	public StringProperty friendsidProperty() {
+		return friendsid;
+	}
+	
+	public String getMembersid() {
+		return membersid.get();
+	}
+
+	public void setMembersid(String membersid) {
+		this.membersid.set(membersid);
+	}
+	
+	public StringProperty membersidProperty() {
+		return membersid;
+	}
+	
+	
 	public String getId() {
 		return id.get();
 	}

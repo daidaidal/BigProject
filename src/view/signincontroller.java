@@ -35,7 +35,7 @@ public class signincontroller {
 	{
 		String name=nameField.getText();
 		String password=passwordField.getText();
-		sign.afterSignin(name, password);
+		sign.afterSignin(name, password,null);
 		signStage.close();
 	}
 	

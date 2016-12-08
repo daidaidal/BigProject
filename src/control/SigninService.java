@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import model.Person;
+
 public class SigninService {
 	private String maxid;
 	public void setMaxId(String maxid)
@@ -34,7 +36,7 @@ public class SigninService {
 		setMaxId(maxid);
 		return maxid;
 	}
-	public void afterSignin(String name,String password)
+	public void afterSignin(String name,String password,Person person)
 	{
 		try {
 		    Class.forName("com.mysql.jdbc.Driver");
@@ -46,7 +48,11 @@ public class SigninService {
 		Statement stmt = connect.createStatement();
 		int id=Integer.parseInt(maxid)+1;
 		String sql="update maxid set id='"+id+"' where id='"+maxid+"'";
-		String sql2="insert into person (name,id,password,company,email,friendsid) values ('"+name+"','"+maxid+"','"+password+"','','','@.@')";
+		String sql2=null;
+		if(person==null)
+			sql2="insert into person (name,id,password,company,email,friendsid) values ('"+name+"','"+maxid+"','"+password+"','','','##@.@##')";
+		else 
+			sql2="insert into qun (name,id,company,email,membersid) values ('"+person.getName()+"','"+maxid+"','"+person.getCompany()+"','"+person.getEmail()+"','')";
 		stmt.executeUpdate(sql);
 		stmt.executeUpdate(sql2);
 		connect.close();
