@@ -144,9 +144,11 @@ public class mainviewcontroller {
 				e.printStackTrace();
 			}
 		String send=null;
-		send=ip+"^&^"+sendArea.getText();
+		send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
 		sendArea.setText("");
 		try {
+			if(socket==null)
+				System.out.println("socket is null");
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 			out.writeUTF(send);
 			out.flush();

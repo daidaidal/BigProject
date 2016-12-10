@@ -108,6 +108,7 @@ public class logincontroller {
 			 }
 			 
 			 //加载好友或者群的信息
+			 //在这里加载每个人的离线信息
 			 
 			 mainapp.setFriendsData(friendsData);
 			 mainapp.showmainview(person);

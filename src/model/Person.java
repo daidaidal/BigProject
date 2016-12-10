@@ -17,6 +17,7 @@ public class Person {
 	private  StringProperty friendsid;
 	private  StringProperty membersid;
 	private  StringProperty myip;
+	private  StringProperty showtext;
 	
 	public Person() {
 		this.id = new SimpleStringProperty("");
@@ -27,7 +28,21 @@ public class Person {
 		this.friendsid = new SimpleStringProperty("");
 		this.membersid = new SimpleStringProperty("");
 		this.myip = new SimpleStringProperty("");
+		this.showtext = new SimpleStringProperty("");
 	}
+	public String getShowtext() {
+		return showtext.get();
+	}
+
+	public void setShowtext(String showtext) {
+		this.showtext.set(showtext);
+	}
+	
+	public StringProperty showtextProperty() {
+		return showtext;
+	}
+	
+	
 	public String getMyip() {
 		return myip.get();
 	}

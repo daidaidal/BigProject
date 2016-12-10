@@ -16,18 +16,21 @@ import java.net.UnknownHostException;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private Pane rootLayout;
     private Person person;
+    static private Socket socket=null;
     
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
     public void setFriendsData(ObservableList<Person> friendsData){
@@ -118,24 +121,27 @@ public class MainApp extends Application {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					Socket socket = null;
+					socket = null;
 					DataInputStream input = null;
 					while (true)
 					{
 						try {
+							System.out.println("jin1");
 							socket = new Socket("115.28.67.141", 10240);
+							System.out.println("jin2");
 							input=new DataInputStream(socket.getInputStream());
+							System.out.println("jin3");
 							String getmessage=input.readUTF();
+							System.out.println("jin4");
 							controller.setGetmessage(getmessage);
+							System.out.println("jin5");
 							controller.setSocket(socket);
+							System.out.println("jin6");
 							
-						} catch (UnknownHostException e) {
+						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} finally {
+						}  finally {
 							try {
 								socket.close();
 							} catch (IOException e) {
@@ -150,14 +156,12 @@ public class MainApp extends Application {
             // Show the dialog and wait until the user closes it
             primaryStage.show();
             
-            /*while(true)
-            {
-            	Socket socket = new Socket("115.28.67.141", 10240);
-            	DataInputStream input=new DataInputStream(socket.getInputStream());
-            	String getmessage=input.readUTF();
-            	controller.setGetmessage(getmessage);     	
-            }
-            */
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    System.out.print("监听到窗口关闭");
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
