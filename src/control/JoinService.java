@@ -30,7 +30,7 @@ public class JoinService {
 		}
       try{   
     	  //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdb", "root", "daidai");
-    	  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bpdb","bp_user","123456");
+    	  Connection con = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb","bp_user","123456");
           Statement stmt=con.createStatement();  
           //id时当前账户的id，idjoin是搜索后获得的id，加好友或者加群都要同时修改两张表(暂时无验证）
           //把对方加入我的表

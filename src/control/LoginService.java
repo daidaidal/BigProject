@@ -15,7 +15,7 @@ public class LoginService {
 		e.printStackTrace();
 		}
 		try {
-		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/bpdb", "bp_user", "123456");
+		Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
 		Statement stmt = connect.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from person where id='" + id + "'");
 		if (rs.next()) {

@@ -77,7 +77,7 @@ public class editcontroller {
 		}
       try{   
     	  //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdb", "root", "daidai");
-    	  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bpdb","bp_user","123456");
+    	  Connection con = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb","bp_user","123456");
           Statement stmt=con.createStatement();  
           //int i=
           stmt.executeUpdate(sql);

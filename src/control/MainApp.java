@@ -6,7 +6,11 @@ import view.logincontroller;
 import view.mainviewcontroller;
 import view.signincontroller;
 import model.Person;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -111,6 +115,14 @@ public class MainApp extends Application {
 
             // Show the dialog and wait until the user closes it
             primaryStage.show();
+            
+            while(true)
+            {
+            	Socket socket = new Socket("115.28.67.141", 10240);
+            	DataInputStream input=new DataInputStream(socket.getInputStream());
+            	String getmessage=input.readUTF();
+            	controller.setGetmessage(getmessage);     	
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,7 +148,7 @@ public class MainApp extends Application {
 			controller.setPerson(person);
 			controller.setMainApp(this);
 			// Show the dialog and wait until the user closes it
-			editStage.showAndWait();;
+			editStage.showAndWait();
 			
 		} catch (IOException e) {
             e.printStackTrace();

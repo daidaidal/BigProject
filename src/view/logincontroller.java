@@ -1,5 +1,8 @@
 package view;
 import model.Person;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,6 +41,7 @@ public class logincontroller {
 	@FXML
 	private void handlelogin()
 	{
+		Person person=new Person();
 		LoginService log=new LoginService();
 		if(passwordField.getText()==null)
 			System.out.println("null");
@@ -52,7 +56,7 @@ public class logincontroller {
 			e.printStackTrace();
 			}
 			try {
-			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/bpdb", "bp_user", "123456");
+			Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
 			Statement stmt = connect.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from person where id='" + idField.getText() + "'");
 			if (rs.next()) {
@@ -62,14 +66,29 @@ public class logincontroller {
 			 String company = rs.getString("company");	
 			 String password = rs.getString("password");
 			 String friendsid=rs.getString("friendsid");
-			 Person person=new Person();
 			 person.setId(id);
 			 person.setName(name);
 			 person.setEmail(email);
 			 person.setCompany(company);
 			 person.setPassword(password);
 			 person.setFriendsid(friendsid);
-			 
+			}
+			//获取ip地址
+			InetAddress ip;
+			String localip=null;
+			try {
+				ip=InetAddress.getLocalHost();
+				localip=ip.getHostAddress();
+				person.setMyip(localip);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+			System.out.println(localip);
+			String sqltongxun="update tongxun set ip='"+localip+"' where id='"+person.getId()+"'";
+			stmt.executeUpdate(sqltongxun);
+			
+			//加载朋友列表和朋友信息
+			String friendsid=person.getFriendsid();
 			 ObservableList<Person> friendsData=mainapp.getFriendsData();
 			 String[] friends=friendsid.split("@.@")[0].split("##"); //friends从0开始，qun从1开始
 			 if(friends.length>0)
@@ -92,7 +111,6 @@ public class logincontroller {
 			 
 			 mainapp.setFriendsData(friendsData);
 			 mainapp.showmainview(person);
-			}
 			connect.close();
 			} catch (SQLException e) {
 			e.printStackTrace();

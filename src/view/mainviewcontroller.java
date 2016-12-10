@@ -1,10 +1,21 @@
 package view;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Person;
@@ -32,6 +43,10 @@ public class mainviewcontroller {
 	private Label friendsemailLabel;
 	@FXML
 	private Label friendsidLabel;
+	@FXML
+	private TextArea sendArea;
+	@FXML
+	private TextArea showArea;
 	
 	private Person person;
 	private Stage mainStage;
@@ -69,6 +84,7 @@ public class mainviewcontroller {
         // Listen for selection changes and show the person details when changed.
 		friendsTable.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showFriendsDetails(newValue));
+		
 	}
 	
 	private void showFriendsDetails(Person person) {
@@ -91,6 +107,10 @@ public class mainviewcontroller {
     		friendsemailLabel.setText("");
     	}
     }
+	public void setGetmessage(String getmessage)
+	{
+		showArea.appendText(getmessage+"/n");
+	}
 	
 	@FXML
 	private void handleEdit()
@@ -101,6 +121,45 @@ public class mainviewcontroller {
 	private void handleAdd()
 	{
 		mainapp.showaddview(person);
+	}
+	@FXML
+	private void handlesend()
+	{
+		String ip=null;
+		
+			try {
+				Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
+				Statement stmt = connect.createStatement();
+				ResultSet rs = stmt.executeQuery("select * from tongxun where id='" + friendsidLabel.getText() + "'");
+				if (rs.next()) {
+					 ip=rs.getString("ip");
+				}
+				connect.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		String send=null;
+		send=ip+"^&^"+sendArea.getText();
+		sendArea.setText("");
+		try {
+			Socket socket = new Socket("115.28.67.141", 10240);
+			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			out.writeUTF(send);
+			out.flush();
+			out.close();
+			socket.close();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		showArea.appendText(send+"/n");
+		
+		
+		
 	}
 	
 }
