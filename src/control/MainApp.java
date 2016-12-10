@@ -124,7 +124,8 @@ public class MainApp extends Application {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            Thread soth = new Thread(new SingalTask(socket, controller));
+            String idd=person.getId();
+            Thread soth = new Thread(new SingalTask(socket, controller,idd));
             soth.start();
             // Show the dialog and wait until the user closes it
             primaryStage.show();

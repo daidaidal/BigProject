@@ -48,6 +48,6 @@
             </HBox>
          </children>
       </GridPane>
-      <Text layoutX="241.0" layoutY="36.0" scaleX="2.0" scaleY="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="视频会议系统" textAlignment="CENTER" wrappingWidth="90.0" />
+      <Text layoutX="241.0" layoutY="36.0" scaleX="2.0" scaleY="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="办公会议系统" textAlignment="CENTER" wrappingWidth="90.0" />
    </children>
 </Pane>
