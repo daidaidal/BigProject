@@ -6,13 +6,10 @@ import view.logincontroller;
 import view.mainviewcontroller;
 import view.signincontroller;
 import model.Person;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import task.SingalTask;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -113,51 +110,22 @@ public class MainApp extends Application {
             controller.setMainStage(primaryStage);
             controller.setPerson(person);
             controller.setMainApp(this);
-            Thread soth = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					Socket socket = null;
-					DataInputStream input = null;
-					while (true)
-					{
-						try {
-							socket = new Socket("115.28.67.141", 10240);
-							input=new DataInputStream(socket.getInputStream());
-							String getmessage=input.readUTF();
-							controller.setGetmessage(getmessage);
-							controller.setSocket(socket);
-							
-						} catch (UnknownHostException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} finally {
-							try {
-								socket.close();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			});
+            Socket socket = null;
+            try {
+				socket = new Socket("115.28.67.141", 10240);
+				controller.setSocket(socket);				
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            Thread soth = new Thread(new SingalTask(socket, controller));
             soth.start();
             // Show the dialog and wait until the user closes it
             primaryStage.show();
             
-            /*while(true)
-            {
-            	Socket socket = new Socket("115.28.67.141", 10240);
-            	DataInputStream input=new DataInputStream(socket.getInputStream());
-            	String getmessage=input.readUTF();
-            	controller.setGetmessage(getmessage);     	
-            }
-            */
         } catch (IOException e) {
             e.printStackTrace();
         }

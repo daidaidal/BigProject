@@ -130,7 +130,7 @@ public class mainviewcontroller {
 	private void handlesend()
 	{
 		String ip=null;
-		
+		System.out.println();
 			try {
 				Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
 				Statement stmt = connect.createStatement();
@@ -151,7 +151,6 @@ public class mainviewcontroller {
 			out.writeUTF(send);
 			out.flush();
 			out.close();
-			socket.close();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,7 +158,7 @@ public class mainviewcontroller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		showArea.appendText(send+"/n");
+		showArea.appendText(send+"\n");
 		
 		
 		
