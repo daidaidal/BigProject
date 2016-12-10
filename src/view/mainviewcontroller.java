@@ -51,12 +51,16 @@ public class mainviewcontroller {
 	private Person person;
 	private Stage mainStage;
 	private MainApp mainapp;
+	private Socket socket;
 	
 	public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
        
     }
-	
+	public void setSocket(Socket s)
+	{
+		this.socket=s;
+	}
 	public void setPerson(Person person) {  
 		this.person=person;
 		nameText.setText(person.getName());
@@ -143,7 +147,6 @@ public class mainviewcontroller {
 		send=ip+"^&^"+sendArea.getText();
 		sendArea.setText("");
 		try {
-			Socket socket = new Socket("115.28.67.141", 10240);
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 			out.writeUTF(send);
 			out.flush();

@@ -113,7 +113,7 @@ public class MainApp extends Application {
             controller.setMainStage(primaryStage);
             controller.setPerson(person);
             controller.setMainApp(this);
-Thread soth = new Thread(new Runnable() {
+            Thread soth = new Thread(new Runnable() {
 				
 				@Override
 				public void run() {
@@ -127,6 +127,7 @@ Thread soth = new Thread(new Runnable() {
 							input=new DataInputStream(socket.getInputStream());
 							String getmessage=input.readUTF();
 							controller.setGetmessage(getmessage);
+							controller.setSocket(socket);
 							
 						} catch (UnknownHostException e) {
 							// TODO Auto-generated catch block
