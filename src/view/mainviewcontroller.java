@@ -12,26 +12,14 @@ import java.sql.Statement;
 
 import control.DeleteService;
 import control.MainApp;
-import control.MessageService;
-import control.ShowMessageService;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Person;
 
@@ -165,7 +153,6 @@ public class mainviewcontroller {
 			name=s[1];
 			message=s[2];
 		}
-		ShowMessageService sh=new ShowMessageService();
 		//sh.show(id1,name, message, mainapp);
 		ObservableList<Person> friendsData=mainapp.getFriendsData();
 		int len = friendsData.size();
@@ -250,7 +237,6 @@ public class mainviewcontroller {
 		}
 		
 		//这么加来回切换会有bug
-		ShowMessageService s=new ShowMessageService();
 		System.out.println("show:"+show);
 		String id1=friendsidLabel.getText();
 		String name=person.getName();
@@ -275,8 +261,7 @@ public class mainviewcontroller {
 				break;
 			}
 		}
-		
-		//friendsshowArea.setText(person.getName()+":\n"+show+"\n");
+		friendsshowArea.appendText(person.getName()+":"+"\n"+message+"\n");
 		
 		
 		
