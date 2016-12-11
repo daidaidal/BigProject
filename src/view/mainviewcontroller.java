@@ -86,7 +86,10 @@ public class mainviewcontroller {
 		companyText.setText(person.getCompany());
 		emailText.setText(person.getEmail());
 	}
-	
+	public void setFriendsTable()
+	{
+		friendsTable.setItems(mainapp.getFriendsData());
+	}
 	public void setMainApp(MainApp mainapp)
 	{
 		this.mainapp=mainapp;
@@ -118,7 +121,6 @@ public class mainviewcontroller {
     		String email=person.getEmail();
     		String id=person.getId();
     		String showtext=person.getShowtext();
-    		
     		String judge=null;
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
@@ -138,7 +140,7 @@ public class mainviewcontroller {
     		friendscompanyLabel.setText("");
     		friendsemailLabel.setText("");
     		friendsidLabel.setText("");
-    		friendsshowArea.setText("");
+    		//friendsshowArea.setText("");
     	}
     }
 	public void setGetmessage(String getmessage)
@@ -151,19 +153,40 @@ public class mainviewcontroller {
 		String id1=null;
 		String name=null;
 		String message=null;
-		if(friendsjudgeLabel.getText().toString().equals("人"))
+		String[] s=getmessage.split("###");
+		if(s.length==2)
 		{
-			id1=getmessage.split("###")[0];
-			message=getmessage.split("###")[1];
+			id1=s[0];
+			message=s[1];
 		}
-		else
+		else if (s.length==3)
 		{
-			id1=getmessage.split("###")[0];
-			name=getmessage.split("###")[1];
-			message=getmessage.split("###")[2];
+			id1=s[0];
+			name=s[1];
+			message=s[2];
 		}
-		ShowMessageService s=new ShowMessageService();
-		s.show(id1,name, message, mainapp);
+		ShowMessageService sh=new ShowMessageService();
+		//sh.show(id1,name, message, mainapp);
+		ObservableList<Person> friendsData=mainapp.getFriendsData();
+		int len = friendsData.size();
+		for(int i=0;i<len;i++)
+		{
+			if(friendsData.get(i).getId().equals(id1))
+			{
+				String before=friendsData.get(i).getShowtext();
+				System.out.println(friendsData.get(i).getId());
+				if(before==null)
+					before="";
+				if(name!=null)
+					before=before+name+":"+"\n"+message+"\n";
+				else 
+					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
+				System.out.println("before:"+before);
+				friendsData.get(i).setShowtext(before);
+				mainapp.setFriendsData(friendsData);
+				break;
+			}
+		}
 	}
 	
 	@FXML
@@ -229,7 +252,30 @@ public class mainviewcontroller {
 		//这么加来回切换会有bug
 		ShowMessageService s=new ShowMessageService();
 		System.out.println("show:"+show);
-		s.show(friendsidLabel.getText(), person.getName(), show, mainapp);
+		String id1=friendsidLabel.getText();
+		String name=person.getName();
+		String message=show;
+		ObservableList<Person> friendsData=mainapp.getFriendsData();
+		int len = friendsData.size();
+		for(int i=0;i<len;i++)
+		{
+			if(friendsData.get(i).getId().equals(id1))
+			{
+				String before=friendsData.get(i).getShowtext();
+				System.out.println(friendsData.get(i).getId());
+				if(before==null)
+					before="";
+				if(name!=null)
+					before=before+name+":"+"\n"+message+"\n";
+				else 
+					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
+				System.out.println("before:"+before);
+				friendsData.get(i).setShowtext(before);
+				mainapp.setFriendsData(friendsData);
+				break;
+			}
+		}
+		
 		//friendsshowArea.setText(person.getName()+":\n"+show+"\n");
 		
 		
