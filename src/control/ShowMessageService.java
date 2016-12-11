@@ -17,6 +17,7 @@ public class ShowMessageService {
 					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
 				else 
 					before=before+name+":"+"\n"+message+"\n";
+				System.out.println("before:"+before);
 				friendsData.get(i).setShowtext(before);
 				mainapp.setFriendsData(friendsData);
 				return;

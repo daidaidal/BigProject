@@ -85,12 +85,6 @@ public class mainviewcontroller {
 		nameText.setText(person.getName());
 		companyText.setText(person.getCompany());
 		emailText.setText(person.getEmail());
-		String judge=null;
-		if(person.getJudge()==true)
-			judge="人";
-		else
-			judge="群";
-		friendsjudgeLabel.setText(judge);
 	}
 	
 	public void setMainApp(MainApp mainapp)
@@ -125,11 +119,17 @@ public class mainviewcontroller {
     		String id=person.getId();
     		String showtext=person.getShowtext();
     		
+    		String judge=null;
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
     		friendsidLabel.setText(id);
     		friendsshowArea.setText(showtext);
+    		if(person.getJudge()==true)
+    			judge="群";
+    		else
+    			judge="人";
+    		friendsjudgeLabel.setText(judge);
     	
     		
     	} else {
@@ -137,10 +137,16 @@ public class mainviewcontroller {
     		friendsnameLabel.setText("");
     		friendscompanyLabel.setText("");
     		friendsemailLabel.setText("");
+    		friendsidLabel.setText("");
+    		friendsshowArea.setText("");
     	}
     }
 	public void setGetmessage(String getmessage)
 	{
+		if(getmessage!=null)
+		{
+			System.out.println(getmessage);
+		}
 		System.out.println(getmessage);
 		String id1=null;
 		String name=null;
@@ -222,7 +228,9 @@ public class mainviewcontroller {
 		
 		//这么加来回切换会有bug
 		ShowMessageService s=new ShowMessageService();
+		System.out.println("show:"+show);
 		s.show(friendsidLabel.getText(), person.getName(), show, mainapp);
+		//friendsshowArea.setText(person.getName()+":\n"+show+"\n");
 		
 		
 		
