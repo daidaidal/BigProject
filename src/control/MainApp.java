@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -28,7 +29,6 @@ public class MainApp extends Application {
     private Pane rootLayout;
     private Person person;
     static private Socket socket=null;
-    
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
     public void setFriendsData(ObservableList<Person> friendsData){
     	this.friendsData=friendsData;
@@ -39,6 +39,7 @@ public class MainApp extends Application {
     public MainApp()
     {
     }
+    private mainviewcontroller control_main_in_edit;
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -113,6 +114,7 @@ public class MainApp extends Application {
             controller.setMainStage(primaryStage);
             controller.setPerson(person);
             controller.setMainApp(this);
+            control_main_in_edit=controller;
             Socket socket = null;
             try {
 				socket = new Socket("115.28.67.141", 10240);
@@ -153,6 +155,7 @@ public class MainApp extends Application {
 			controller.setStage(editStage);
 			controller.setPerson(person);
 			controller.setMainApp(this);
+			controller.getMainviewController(control_main_in_edit);
 			// Show the dialog and wait until the user closes it
 			editStage.showAndWait();
 			

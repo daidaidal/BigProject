@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
@@ -32,11 +33,18 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="289.0">
                            <children>
-                              <TableView fx:id="friendsTable" layoutX="54.0" layoutY="73.0" prefHeight="476.0" prefWidth="289.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="friendsTable" layoutY="-14.0" prefHeight="476.0" prefWidth="289.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-14.0">
                                 <columns>
                                   <TableColumn fx:id="nameColumn" prefWidth="140.0" text="name" />
                                   <TableColumn fx:id="companyColumn" minWidth="0.0" prefWidth="148.0" text="company" />
                                 </columns>
+                                 <contextMenu>
+                                    <ContextMenu fx:id="contextmenu">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_cm_delete" text="移除" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
                               </TableView>
                            </children></AnchorPane>
                      </items>
@@ -49,9 +57,9 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="friendsnameLabel" layoutX="62.0" layoutY="19.0" text="Label" />
-                              <Label fx:id="friendscompanyLabel" layoutX="274.0" layoutY="18.0" text="Label" />
-                              <Label fx:id="friendsemailLabel" layoutX="411.0" layoutY="19.0" text="Label" />
+                              <Label fx:id="friendsnameLabel" layoutX="62.0" layoutY="19.0" />
+                              <Label fx:id="friendscompanyLabel" layoutX="274.0" layoutY="18.0" />
+                              <Label fx:id="friendsemailLabel" layoutX="411.0" layoutY="19.0" />
                               <Label layoutX="26.0" layoutY="19.0" text="名字" />
                               <Label layoutX="240.0" layoutY="18.0" text="公司" />
                               <Label layoutX="364.0" layoutY="18.0" text="email" />

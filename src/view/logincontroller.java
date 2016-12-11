@@ -95,7 +95,10 @@ public class logincontroller {
 				 for(int i=1;i<friends.length;i++)
 				 {
 					 GetFriends f=new GetFriends();
-					 friendsData.add(f.Add_Friends_info(friends[i], false));
+					 Person p=new Person();
+					 p=f.Add_Friends_info(friends[i], false);
+					 p.setJudge(false);
+					 friendsData.add(p);
 				 }
 			 
 			 
@@ -104,7 +107,10 @@ public class logincontroller {
 			 for(int i=1;i<quns.length;i++)
 			 {
 				 GetFriends f = new GetFriends();
-				 friendsData.add(f.Add_Friends_info(quns[i], true));
+				 Person p= new Person();
+				 p=f.Add_Friends_info(quns[i], true);
+				 p.setJudge(true);
+				 friendsData.add(p);
 			 }
 			 
 			 //加载好友或者群的信息

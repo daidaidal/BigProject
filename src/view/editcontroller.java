@@ -27,8 +27,13 @@ public class editcontroller {
 	private MainApp mainapp;
 	private Stage editStage;
 	private Person person;
+	private mainviewcontroller controller;
 	
 	public editcontroller(){
+	}
+	public void getMainviewController(mainviewcontroller controller)
+	{
+		this.controller=controller;
 	}
 	
 	public void setMainApp(MainApp mainApp) {
@@ -86,7 +91,7 @@ public class editcontroller {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        mainapp.showmainview(person);
+        controller.setPerson(person);
         editStage.close();
 	}
 	

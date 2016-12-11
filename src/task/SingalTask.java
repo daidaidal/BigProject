@@ -29,22 +29,23 @@ public class SingalTask implements Runnable {
 			outputStream.flush();
 			while (true)
 			{
-				socket.setSoTimeout(100);
-				inputStream = new DataInputStream(socket.getInputStream());
-				String getmessage=inputStream.readUTF();		
-				controller.setGetmessage(getmessage);
+				try {
+					socket.setSoTimeout(100);
+					inputStream = new DataInputStream(socket.getInputStream());
+					String getmessage=inputStream.readUTF();		
+					controller.setGetmessage(getmessage);
+				} catch (SocketTimeoutException e) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}				
 			}		
-		} catch (SocketTimeoutException e) {
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		} catch (IOException e) {
 			// TODO: handle exception
 		}
-		
 	}
 
 }

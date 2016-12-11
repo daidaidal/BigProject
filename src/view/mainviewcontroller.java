@@ -11,12 +11,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import control.MainApp;
+import control.MessageService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Person;
 
@@ -47,6 +59,8 @@ public class mainviewcontroller {
 	private TextArea sendArea;
 	@FXML
 	private TextArea showArea;
+	@FXML
+	private ContextMenu cm;
 	
 	private Person person;
 	private Stage mainStage;
@@ -127,6 +141,13 @@ public class mainviewcontroller {
 		mainapp.showaddview(person);
 	}
 	@FXML
+	private void handle_cm_delete()
+	{
+		String id=friendsidLabel.getText();
+		MessageService m= new MessageService();
+		m.showmessage(message);
+	}
+	@FXML
 	private void handlesend()
 	{
 		String ip=null;
@@ -160,7 +181,7 @@ public class mainviewcontroller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		showArea.appendText(send+"\n");
+		showArea.appendText(send+"/n");
 		
 		
 		
