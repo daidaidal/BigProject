@@ -12,6 +12,8 @@ import java.sql.Statement;
 
 import control.MainApp;
 import control.MessageService;
+import control.ShowMessageService;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +60,7 @@ public class mainviewcontroller {
 	@FXML
 	private TextArea sendArea;
 	@FXML
-	private TextArea showArea;
+	private TextArea friendsshowArea;
 	@FXML
 	private ContextMenu cm;
 	
@@ -112,10 +114,12 @@ public class mainviewcontroller {
     		String company=person.getCompany();
     		String email=person.getEmail();
     		String id=person.getId();
+    		String showtext=person.getShowtext();
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
     		friendsidLabel.setText(id);
+    		friendsshowArea.setText(showtext);
     	
     		
     	} else {
@@ -127,7 +131,10 @@ public class mainviewcontroller {
     }
 	public void setGetmessage(String getmessage)
 	{
-		showArea.appendText(getmessage+"/n");
+		String id=getmessage.split("###")[0];
+		String message=getmessage.split("###")[1];
+		ShowMessageService s=new ShowMessageService();
+		s.show(id, message, mainapp);
 	}
 	
 	@FXML
@@ -145,7 +152,6 @@ public class mainviewcontroller {
 	{
 		String id=friendsidLabel.getText();
 		MessageService m= new MessageService();
-		m.showmessage(message);
 	}
 	@FXML
 	private void handlesend()
@@ -166,6 +172,7 @@ public class mainviewcontroller {
 			}
 		String send=null;
 		send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
+		String show = sendArea.getText();
 		sendArea.setText("");
 		try {
 			if(socket==null)
@@ -173,7 +180,6 @@ public class mainviewcontroller {
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 			out.writeUTF(send);
 			out.flush();
-			out.close();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,7 +187,9 @@ public class mainviewcontroller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		showArea.appendText(send+"/n");
+		
+		friendsshowArea.appendText(nameText.getText()+":"+"\n");
+		friendsshowArea.appendText(show+"\n");
 		
 		
 		

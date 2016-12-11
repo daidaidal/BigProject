@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.controlsfx.dialog.Dialogs;
 
 import control.GetFriends;
 import control.LoginService;
@@ -74,6 +73,7 @@ public class logincontroller {
 			 person.setFriendsid(friendsid);
 			}
 			//获取ip地址
+			/*
 			InetAddress ip;
 			String localip=null;
 			try {
@@ -86,7 +86,19 @@ public class logincontroller {
 			System.out.println(localip);
 			String sqltongxun="update tongxun set ip='"+localip+"' where id='"+person.getId()+"'";
 			stmt.executeUpdate(sqltongxun);
+			*/
 			
+			int count=1;
+			int maxcount=0;
+			//离线消息集
+			String[] lixian=null;
+			ResultSet rs2=null;
+			rs2=stmt.executeQuery("select * from tongxun where id='"+person.getId()+"'");
+			if(rs2.next())
+			{
+				lixian=rs.getString("message").split("@.@");
+				maxcount=lixian.length;
+			}
 			//加载朋友列表和朋友信息
 			String friendsid=person.getFriendsid();
 			 ObservableList<Person> friendsData=mainapp.getFriendsData();
@@ -98,20 +110,54 @@ public class logincontroller {
 					 Person p=new Person();
 					 p=f.Add_Friends_info(friends[i], false);
 					 p.setJudge(false);
+					 String id=p.getId();
+					 if(count!=-1)
+					 {
+						 for(i=count;i<maxcount;i++)
+						 {
+							 String iddd=lixian[count].split("###")[0];
+							 if(id.equals(iddd))
+							 {
+								 String before=p.getShowtext();
+								 before=before+p.getName()+":"+"\n"+lixian[count].split("###")[1]+"\n";
+								 p.setShowtext(before);
+								 count++;
+								 if(count==maxcount)
+									 count=-1; 
+							 }
+						 }
+					 }
 					 friendsData.add(p);
 				 }
 			 
 			 
 			 String[] quns=friendsid.split("@.@")[1].split("##");
-			 
-			 for(int i=1;i<quns.length;i++)
-			 {
-				 GetFriends f = new GetFriends();
-				 Person p= new Person();
-				 p=f.Add_Friends_info(quns[i], true);
-				 p.setJudge(true);
-				 friendsData.add(p);
-			 }
+			 if(quns.length>0)
+				 for(int i=1;i<quns.length;i++)
+				 {
+					 GetFriends f = new GetFriends();
+					 Person p= new Person();
+					 p=f.Add_Friends_info(quns[i], true);
+					 p.setJudge(true);
+					 String id=p.getId();
+					 if(count!=-1)
+					 {
+						 for(i=count;i<maxcount;i++)
+						 {
+							 String iddd=lixian[count].split("###")[0];
+							 if(id.equals(iddd))
+							 {
+								 String before=p.getShowtext();
+								 before=before+p.getName()+":"+"\n"+lixian[count].split("###")[1]+"\n";
+								 p.setShowtext(before);
+								 count++;
+								 if(count==maxcount)
+									 count=-1; 
+							 }
+						 }
+					 }
+					 friendsData.add(p);
+				 }
 			 
 			 //加载好友或者群的信息
 			 //在这里加载每个人的离线信息
