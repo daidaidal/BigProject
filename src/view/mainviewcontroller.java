@@ -115,6 +115,7 @@ public class mainviewcontroller {
     		String email=person.getEmail();
     		String id=person.getId();
     		String showtext=person.getShowtext();
+    		
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
@@ -131,6 +132,7 @@ public class mainviewcontroller {
     }
 	public void setGetmessage(String getmessage)
 	{
+		System.out.println(getmessage);
 		String id=getmessage.split("###")[0];
 		String message=getmessage.split("###")[1];
 		ShowMessageService s=new ShowMessageService();

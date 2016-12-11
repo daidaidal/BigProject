@@ -96,7 +96,7 @@ public class logincontroller {
 			rs2=stmt.executeQuery("select * from tongxun where id='"+person.getId()+"'");
 			if(rs2.next())
 			{
-				lixian=rs.getString("message").split("@.@");
+				lixian=rs2.getString("message").split("@.@");
 				maxcount=lixian.length;
 			}
 			//加载朋友列表和朋友信息
@@ -161,7 +161,7 @@ public class logincontroller {
 			 
 			 //加载好友或者群的信息
 			 //在这里加载每个人的离线信息
-			 
+			 stmt.executeUpdate("update tongxun set message='"+"' where id='"+person.getId()+"'");
 			 mainapp.setFriendsData(friendsData);
 			 mainapp.showmainview(person);
 			connect.close();
