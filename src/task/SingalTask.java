@@ -47,5 +47,4 @@ public class SingalTask implements Runnable {
 			// TODO: handle exception
 		}
 	}
-
 }

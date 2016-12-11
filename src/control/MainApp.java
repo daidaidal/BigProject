@@ -6,6 +6,7 @@ import view.logincontroller;
 import view.mainviewcontroller;
 import view.signincontroller;
 import model.Person;
+import task.KeepTask;
 import task.SingalTask;
 import java.io.IOException;
 import java.net.Socket;
@@ -129,6 +130,8 @@ public class MainApp extends Application {
             String idd=person.getId();
             Thread soth = new Thread(new SingalTask(socket, controller,idd));
             soth.start();
+            Thread keepSocket = new Thread(new KeepTask(socket));
+            keepSocket.start();
             // Show the dialog and wait until the user closes it
             primaryStage.show();
             
