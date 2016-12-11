@@ -65,6 +65,7 @@
                               <Label layoutX="364.0" layoutY="18.0" text="email" />
                               <Label layoutX="141.0" layoutY="18.0" text="账号" />
                               <Label fx:id="friendsidLabel" layoutX="180.0" layoutY="18.0" text="Label" />
+                              <Label fx:id="friendsjudgeLabel" layoutX="525.0" layoutY="18.0" text="Label" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

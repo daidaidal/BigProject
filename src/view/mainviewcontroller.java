@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import control.DeleteService;
 import control.MainApp;
 import control.MessageService;
 import control.ShowMessageService;
@@ -62,6 +63,8 @@ public class mainviewcontroller {
 	@FXML
 	private TextArea friendsshowArea;
 	@FXML
+	private Label friendsjudgeLabel;
+	@FXML
 	private ContextMenu cm;
 	
 	private Person person;
@@ -82,6 +85,12 @@ public class mainviewcontroller {
 		nameText.setText(person.getName());
 		companyText.setText(person.getCompany());
 		emailText.setText(person.getEmail());
+		String judge=null;
+		if(person.getJudge()==true)
+			judge="人";
+		else
+			judge="群";
+		friendsjudgeLabel.setText(judge);
 	}
 	
 	public void setMainApp(MainApp mainapp)
@@ -133,10 +142,22 @@ public class mainviewcontroller {
 	public void setGetmessage(String getmessage)
 	{
 		System.out.println(getmessage);
-		String id=getmessage.split("###")[0];
-		String message=getmessage.split("###")[1];
+		String id1=null;
+		String name=null;
+		String message=null;
+		if(friendsjudgeLabel.getText().equals("人"))
+		{
+			id1=getmessage.split("###")[0];
+			message=getmessage.split("###")[1];
+		}
+		else
+		{
+			id1=getmessage.split("###")[0];
+			name=getmessage.split("###")[1];
+			message=getmessage.split("###")[2];
+		}
 		ShowMessageService s=new ShowMessageService();
-		s.show(id, message, mainapp);
+		s.show(id1,name, message, mainapp);
 	}
 	
 	@FXML
@@ -153,7 +174,13 @@ public class mainviewcontroller {
 	private void handle_cm_delete()
 	{
 		String id=friendsidLabel.getText();
-		MessageService m= new MessageService();
+		DeleteService d=new DeleteService();
+		Boolean judge;
+		if(friendsjudgeLabel.getText()=="群")
+			judge=true;
+		else
+			judge=false;
+		d.delete(person.getId(), id,judge);
 	}
 	@FXML
 	private void handlesend()
@@ -173,7 +200,10 @@ public class mainviewcontroller {
 				e.printStackTrace();
 			}
 		String send=null;
-		send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
+		if(friendsjudgeLabel.getText().equals("人"))
+			send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
+		else
+			send="qun^&^"+person.getId()+"^&^"+person.getName()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
 		String show = sendArea.getText();
 		sendArea.setText("");
 		try {
@@ -190,8 +220,9 @@ public class mainviewcontroller {
 			e.printStackTrace();
 		}
 		
-		friendsshowArea.appendText(nameText.getText()+":"+"\n");
-		friendsshowArea.appendText(show+"\n");
+		//这么加来回切换会有bug
+		ShowMessageService s=new ShowMessageService();
+		s.show(friendsidLabel.getText(), person.getName(), show, mainapp);
 		
 		
 		

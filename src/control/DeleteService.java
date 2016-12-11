@@ -39,16 +39,15 @@ public class DeleteService {
         	  members=rs.getString("friendsid");
           
           if(judge==true)
-        	  members=members+id+"##";
+          	  members=members.replaceAll(id+"##", "");
           else 
-        	  members="##"+id+members;
-          
+          	  members=members.replaceAll("##"+id, "");
           String sql1="update person set friendsid='"+members+"' where id='"+myid+"'";
           //把我从对方的表删除
           ResultSet rs2=stmt.executeQuery("select * from "+table+" where id='"+id+"'");
           if(rs2.next())
         	  members=rs2.getString(friend_member);
-          members="##"+id+members;
+          members=members.replaceAll("##"+myid, "");
           String sql2="update "+table+" set "+friend_member+"='"+members+"' where id='"+id+"'";
           
           stmt.executeUpdate(sql1);
