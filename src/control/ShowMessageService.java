@@ -13,6 +13,8 @@ public class ShowMessageService {
 			if(friendsData.get(i).getId().equals(id))
 			{
 				String before=friendsData.get(i).getShowtext();
+				if(before==null)
+					before="";
 				if(name!=null)
 					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
 				else 
