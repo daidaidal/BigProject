@@ -151,7 +151,7 @@ public class mainviewcontroller {
 		String id1=null;
 		String name=null;
 		String message=null;
-		if(friendsjudgeLabel.getText().equals("人"))
+		if(friendsjudgeLabel.getText().toString().equals("人"))
 		{
 			id1=getmessage.split("###")[0];
 			message=getmessage.split("###")[1];
@@ -182,8 +182,8 @@ public class mainviewcontroller {
 		String id=friendsidLabel.getText();
 		DeleteService d=new DeleteService();
 		Boolean judge;
-		if(friendsjudgeLabel.getText()=="群")
-			judge=true;
+		if(friendsjudgeLabel.getText().toString().equals("群"))
+				judge=true;
 		else
 			judge=false;
 		d.delete(person.getId(), id,judge);
@@ -206,7 +206,7 @@ public class mainviewcontroller {
 				e.printStackTrace();
 			}
 		String send=null;
-		if(friendsjudgeLabel.getText().equals("人"))
+		if(friendsjudgeLabel.getText().toString().equals("人"))
 			send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
 		else
 			send="qun^&^"+person.getId()+"^&^"+person.getName()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
