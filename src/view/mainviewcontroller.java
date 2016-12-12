@@ -280,7 +280,8 @@ public class mainviewcontroller {
 				break;
 			}
 		}
-		friendsshowArea.appendText(person.getName()+":"+"\n"+message+"\n");
+		friendsshowArea.appendText("");
+		//friendsshowArea.appendText(person.getName()+":"+"\n"+message+"\n");
 		
 		
 		
