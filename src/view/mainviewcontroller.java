@@ -176,7 +176,10 @@ public class mainviewcontroller {
 		}
 		if(id1.equals(friendsidLabel.getText()))
 		{
-			friendsshowArea.appendText(friendsnameLabel.getText()+":"+"\n"+message+"\n");
+			if(friendsjudgeLabel.getText().equals("人"))
+				friendsshowArea.appendText(friendsnameLabel.getText()+":"+"\n"+message+"\n");
+			else if(friendsjudgeLabel.getText().equals("群"))	
+				friendsshowArea.appendText(name+":"+"\n"+message+"\n");
 		}
 	}
 	
