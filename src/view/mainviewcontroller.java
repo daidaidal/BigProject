@@ -174,6 +174,10 @@ public class mainviewcontroller {
 				break;
 			}
 		}
+		if(id1.equals(friendsidLabel.getText()))
+		{
+			friendsshowArea.appendText(friendsnameLabel.getText()+":"+"\n"+message+"\n");
+		}
 	}
 	
 	@FXML
@@ -197,6 +201,18 @@ public class mainviewcontroller {
 		else
 			judge=false;
 		d.delete(person.getId(), id,judge);
+		
+		ObservableList<Person> friendsData=mainapp.getFriendsData();
+		int len = friendsData.size();
+		for(int i=0;i<len;i++)
+		{
+			if(friendsData.get(i).getId().equals(id))
+			{
+				Person p=friendsData.remove(i);
+				mainapp.setFriendsData(friendsData);
+				break;
+			}
+		}
 	}
 	@FXML
 	private void handlesend()

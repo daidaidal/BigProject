@@ -115,11 +115,12 @@ public class logincontroller {
 					 {
 						 for(i=count;i<maxcount;i++)
 						 {
-							 String iddd=lixian[count].split("###")[0];
+							 String[] message=lixian[count].split("###");
+							 String iddd=message[0];
 							 if(id.equals(iddd))
 							 {
 								 String before=p.getShowtext();
-								 before=before+p.getName()+":"+"\n"+lixian[count].split("###")[1]+"\n";
+								 before=before+p.getName()+":"+"\n"+message[1]+"\n";
 								 p.setShowtext(before);
 								 count++;
 								 if(count==maxcount)
@@ -144,11 +145,12 @@ public class logincontroller {
 					 {
 						 for(i=count;i<maxcount;i++)
 						 {
-							 String iddd=lixian[count].split("###")[0];
+							 String[] message=lixian[count].split("###");
+							 String iddd=message[0];
 							 if(id.equals(iddd))
 							 {
 								 String before=p.getShowtext();
-								 before=before+p.getName()+":"+"\n"+lixian[count].split("###")[1]+"\n";
+								 before=before+message[1]+":"+"\n"+message[2]+"\n";
 								 p.setShowtext(before);
 								 count++;
 								 if(count==maxcount)

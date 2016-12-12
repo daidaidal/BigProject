@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,7 +20,7 @@ public class Person {
 	private  StringProperty friendsid;
 	private  StringProperty membersid;
 	private  StringProperty myip;
-	private  StringProperty showtext;
+    private  StringProperty showtext;
 	private  BooleanProperty judge;
 	
 	public Person() {
