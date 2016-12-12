@@ -11,6 +11,12 @@ import task.SingalTask;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -134,6 +140,20 @@ public class MainApp extends Application {
             keepSocket.start();
             // Show the dialog and wait until the user closes it
             primaryStage.show();
+            
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                	try {
+    					Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
+    					Statement stmt = connect.createStatement();
+    					stmt.executeUpdate("update tongxun set online='offline' where id='"+idd+"'");
+    					connect.close();
+    				} catch (SQLException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+                }
+                }});
             
         } catch (IOException e) {
             e.printStackTrace();

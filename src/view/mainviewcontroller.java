@@ -54,6 +54,8 @@ public class mainviewcontroller {
 	private Label friendsjudgeLabel;
 	@FXML
 	private ContextMenu cm;
+	@FXML
+	private Label friendsonlineLabel;
 	
 	private Person person;
 	private Stage mainStage;
@@ -110,6 +112,7 @@ public class mainviewcontroller {
     		String id=person.getId();
     		String showtext=person.getShowtext();
     		String judge=null;
+    		String online=null;
     		friendsnameLabel.setText(name);
     		friendscompanyLabel.setText(company);
     		friendsemailLabel.setText(email);
@@ -120,6 +123,21 @@ public class mainviewcontroller {
     		else
     			judge="人";
     		friendsjudgeLabel.setText(judge);
+    		
+    		if(person.getJudge()==false)
+	    		try {
+					Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
+					Statement stmt = connect.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from tongxun where id='" + id + "'");
+					if (rs.next()) {
+						 online=rs.getString("online");
+					}
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		friendsonlineLabel.setText(online);
     	
     		
     	} else {

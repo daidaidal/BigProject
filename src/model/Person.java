@@ -22,6 +22,7 @@ public class Person {
 	private  StringProperty myip;
     private  StringProperty showtext;
 	private  BooleanProperty judge;
+	private  StringProperty online;
 	
 	public Person() {
 		this.id = new SimpleStringProperty("");
@@ -34,7 +35,20 @@ public class Person {
 		this.myip = new SimpleStringProperty("");
 		this.showtext = new SimpleStringProperty("");
 		this.judge = new SimpleBooleanProperty(false);
+		this.online = new SimpleStringProperty("");
 	}
+	public String getOnline() {
+		return online.get();
+	}
+
+	public void setOnline(String online) {
+		this.online.set(online);
+	}
+	
+	public StringProperty onlineProperty() {
+		return online;
+	}
+	
 	public Boolean getJudge() {
 		return judge.get();
 	}

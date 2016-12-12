@@ -106,11 +106,21 @@ public class logincontroller {
 			 if(friends.length>0)
 				 for(int i=1;i<friends.length;i++)
 				 {
+					 String online=null;
 					 GetFriends f=new GetFriends();
 					 Person p=new Person();
 					 p=f.Add_Friends_info(friends[i], false);
 					 p.setJudge(false);
 					 String id=p.getId();
+					 /*
+					 ResultSet rs3 =stmt.executeQuery("select * from tongxun where id='"+id+"'");
+					 if(rs3.next())
+						 online=rs3.getString("online");
+					 if(online.equals("yes"))
+						 p.setOnline("是");
+					 else if(online.equals("no"))
+						 p.setOnline("否");
+						 */
 					 if(count!=-1)
 					 {
 						 for(i=count;i<maxcount;i++)
@@ -163,7 +173,7 @@ public class logincontroller {
 			 
 			 //加载好友或者群的信息
 			 //在这里加载每个人的离线信息
-			 stmt.executeUpdate("update tongxun set message='"+"' where id='"+person.getId()+"'");
+			 stmt.executeUpdate("update tongxun set message='"+"',online='online' where id='"+person.getId()+"'");
 			 mainapp.setFriendsData(friendsData);
 			 mainapp.showmainview(person);
 			connect.close();
