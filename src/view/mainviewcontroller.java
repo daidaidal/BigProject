@@ -239,7 +239,6 @@ public class mainviewcontroller {
 	private void handlesend()
 	{
 		String ip=null;
-		System.out.println();
 			try {
 				Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
 				Statement stmt = connect.createStatement();
@@ -278,6 +277,7 @@ public class mainviewcontroller {
 		String id1=friendsidLabel.getText();
 		String name=person.getName();
 		String message=show;
+		friendsshowArea.appendText(name+":"+"\n"+show+"\n");
 		ObservableList<Person> friendsData=mainapp.getFriendsData();
 		int len = friendsData.size();
 		for(int i=0;i<len;i++)
@@ -298,7 +298,8 @@ public class mainviewcontroller {
 				break;
 			}
 		}
-		friendsshowArea.appendText("");
+		
+		//friendsshowArea.appendText(person.getName()+":"+"\n"+show+"\n");
 		//friendsshowArea.appendText(person.getName()+":"+"\n"+message+"\n");
 		
 		
