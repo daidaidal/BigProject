@@ -6,6 +6,7 @@ import view.editcontroller;
 import view.jianquncontroller;
 import view.logincontroller;
 import view.mainviewcontroller;
+import view.showdrawcontroller;
 import view.signincontroller;
 import model.Person;
 import task.KeepTask;
@@ -159,6 +160,25 @@ public class MainApp extends Application {
                 }});
             
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void sshowdraw()
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/showdraw.fxml"));
+			StackPane mainpane = (StackPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage drawStage = new Stage();
+
+			// Set the person into the controller.
+			showdrawcontroller controller = loader.getController();
+
+			// Show the dialog and wait until the user closes it
+			
+		} catch (IOException e) {
             e.printStackTrace();
         }
     }

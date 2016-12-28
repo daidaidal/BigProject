@@ -28,7 +28,7 @@ import model.Person;
 public class mainviewcontroller {
 	@FXML
     private TableView<Person> friendsTable;
-    @FXML
+    @FXML 
     private TableColumn<Person, String> nameColumn;
     @FXML
     private TableColumn<Person, String> companyColumn;

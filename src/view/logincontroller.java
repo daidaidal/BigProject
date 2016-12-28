@@ -9,10 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+import view.messagecontroller;
 import control.GetFriends;
 import control.LoginService;
 import control.MainApp;
+import control.MessageService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -47,6 +48,11 @@ public class logincontroller {
 		else if(passwordField.getText()=="")
 			System.out.println("not null");
 		boolean judge=log.login(idField.getText(),passwordField.getText());
+		if(judge==false)
+		{
+			MessageService m=new MessageService();
+			m.set(1);	
+		}
 		if(judge==true)
 		{
 			try {
