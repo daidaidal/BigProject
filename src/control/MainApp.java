@@ -1,5 +1,7 @@
+
 package control;
 import view.addcontroller;
+import view.drawcontroller;
 import view.editcontroller;
 import view.jianquncontroller;
 import view.logincontroller;
@@ -26,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -156,6 +159,25 @@ public class MainApp extends Application {
                 }});
             
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showdraw()
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/draw.fxml"));
+			StackPane mainpane = (StackPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage drawStage = new Stage();
+
+			// Set the person into the controller.
+			drawcontroller controller = loader.getController();
+			controller.drawinit(drawStage,mainpane);
+			// Show the dialog and wait until the user closes it
+			
+		} catch (IOException e) {
             e.printStackTrace();
         }
     }

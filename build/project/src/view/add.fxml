@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.addcontroller">
+   <children>
+      <SplitPane dividerPositions="0.33707865168539325" layoutX="150.0" layoutY="35.0" orientation="VERTICAL" prefHeight="269.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="94.0" prefWidth="474.0">
+               <children>
+                  <Label layoutX="49.0" layoutY="33.0" text="id：" />
+                  <TextField fx:id="idField" layoutX="105.0" layoutY="28.0" />
+                  <Button layoutX="335.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSearch" text="搜索" />
+                  <Button layoutX="400.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleJianqun" text="建群" />
+               </children>
+            </AnchorPane>
+          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="474.0">
+               <children>
+                  <Label layoutX="37.0" layoutY="27.0" text="人/群：" />
+                  <Label fx:id="ren_qunLabel" layoutX="130.0" layoutY="27.0" text="Label" />
+                  <Label layoutX="37.0" layoutY="67.0" text="名字：" />
+                  <Label layoutX="37.0" layoutY="106.0" text="公司：" />
+                  <Label layoutX="37.0" layoutY="146.0" text="email：" />
+                  <Button layoutX="359.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleJoin" text="加入" />
+                  <Label fx:id="nameLabel" layoutX="130.0" layoutY="67.0" text="Label" />
+                  <Label fx:id="companyLabel" layoutX="130.0" layoutY="106.0" text="Label" />
+                  <Label fx:id="emailLabel" layoutX="130.0" layoutY="146.0" text="Label" />
+                  <Label fx:id="messageLabel" layoutX="130.0" layoutY="178.0" text="Label" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
