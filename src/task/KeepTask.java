@@ -1,8 +1,10 @@
 package task;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import model.DataPack;
 
 public class KeepTask implements Runnable {
 	private Socket socket;
@@ -15,7 +17,7 @@ public class KeepTask implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		DataOutputStream outputStream;
+		ObjectOutputStream outputStream;
 		while (true)
 		{
 			try {
@@ -25,8 +27,9 @@ public class KeepTask implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				outputStream = new DataOutputStream(socket.getOutputStream());
-				outputStream.writeUTF("");
+				DataPack dp = new DataPack(0, "", null, null);
+				outputStream = new ObjectOutputStream(socket.getOutputStream());
+				outputStream.writeObject(dp);
 				outputStream.flush();				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

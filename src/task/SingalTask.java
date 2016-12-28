@@ -3,16 +3,18 @@ package task;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import model.DataPack;
 import view.mainviewcontroller;
 
 public class SingalTask implements Runnable {
 	private Socket socket;
 	private mainviewcontroller controller;
 	private String idd;
-	
+	private DataPack dp;
 	public SingalTask(Socket socket, mainviewcontroller controller, String idd) {
 		super();
 		this.socket = socket;
@@ -23,7 +25,7 @@ public class SingalTask implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			DataInputStream inputStream = null;
+			ObjectInputStream inputStream = null;
 			DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 			outputStream.writeUTF(idd);
 			outputStream.flush();
@@ -31,9 +33,15 @@ public class SingalTask implements Runnable {
 			{
 				try {
 					socket.setSoTimeout(100);
-					inputStream = new DataInputStream(socket.getInputStream());
-					String getmessage=inputStream.readUTF();		
-					controller.setGetmessage(getmessage);
+					inputStream = new ObjectInputStream(socket.getInputStream());
+					try {
+						dp = (DataPack) inputStream.readObject();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//panduan
+					controller.setGetmessage(dp.getMsg());
 				} catch (SocketTimeoutException e) {
 					try {
 						Thread.sleep(3000);
