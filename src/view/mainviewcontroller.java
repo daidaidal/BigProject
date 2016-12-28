@@ -2,6 +2,7 @@ package view;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.DataPack;
 import model.Person;
 
 public class mainviewcontroller {
@@ -252,17 +254,25 @@ public class mainviewcontroller {
 				e.printStackTrace();
 			}
 		String send=null;
-		if(friendsjudgeLabel.getText().toString().equals("人"))
+		DataPack dp = new DataPack();
+		if(friendsjudgeLabel.getText().toString().equals("人")) {
 			send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
-		else
+			dp.setMode(1);
+		}
+		else {
 			send="qun^&^"+person.getId()+"^&^"+person.getName()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
+			dp.setMode(2);
+		}
 		String show = sendArea.getText();
 		sendArea.setText("");
 		try {
 			if(socket==null)
 				System.out.println("socket is null");
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-			out.writeUTF(send);
+			dp.setMsg(send);
+			dp.setX(null);
+			dp.setY(null);
+			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+			out.writeObject(dp);
 			out.flush();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
