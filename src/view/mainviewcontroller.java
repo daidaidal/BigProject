@@ -1,6 +1,7 @@
 package view;
-
+import java.awt.Desktop;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -9,17 +10,24 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import control.DeleteService;
 import control.MainApp;
+import control.PptService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Person;
 
@@ -310,6 +318,48 @@ public class mainviewcontroller {
 	{
 		mainapp.showdraw();
 	}
+	@FXML
+	private void handleshowppt()
+	{
+		int number=0;
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("选择ppt");
+		File file = fileChooser.showOpenDialog(mainStage);
+        if (file != null) {
+        	System.out.println(file);
+        	PptService p = new PptService();
+        	number=p.translate(file.toString());
+        	try {
+    			FXMLLoader loader = new FXMLLoader();
+    			loader.setLocation(mainviewcontroller.class.getResource("/view/ppt.fxml"));
+    			StackPane pptpane = (StackPane) loader.load();
+    			// Create the dialog Stage.
+    			//Stage primaryStage = new Stage();
+    			Stage pptStage = new Stage();
+    			pptStage.setTitle("edit");
+    			pptStage.initModality(Modality.WINDOW_MODAL);
+    			
+    			// Set the person into the controller.
+    			pptcontroller controller = loader.getController();
+    			controller.init("1",number,pptpane,pptStage);
+    			
+    		} catch (IOException e) {
+                e.printStackTrace();
+            }
+            //openFile(file);
+        }
+	}
+	private void openFile(File file) {
+		Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(
+            		mainviewcontroller.class.getName()).log(
+                        Level.SEVERE, null, ex
+                    );
+        }
+    }
 	
 	
 }

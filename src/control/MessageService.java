@@ -12,7 +12,7 @@ public class MessageService {
 	public void set(int judge){
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(messagecontroller.class.getResource("/view/message.fxml"));
+			loader.setLocation(MessageService.class.getResource("/view/message.fxml"));
 			AnchorPane m = (AnchorPane) loader.load();
 			
 			Stage ms = new Stage();
@@ -22,7 +22,7 @@ public class MessageService {
 			
 			
 			messagecontroller controller = loader.getController();
-			//密码错误
+			//密码错误 1
 			controller.setStage(ms);
 			controller.setJudge(judge);
 			ms.show();

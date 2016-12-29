@@ -39,6 +39,7 @@ public class drawcontroller {
     private GraphicsContext gc = canvas.getGraphicsContext2D(); 
     private List<Double> x = new ArrayList<>();
     private List<Double> y=new ArrayList<>();
+    
     private int judge=-1;
     private int ca_xie=1;
     
@@ -49,6 +50,7 @@ public class drawcontroller {
             double py = me.getY() - brushSize / 2;  
             double pw = brushSize;  
             double ph = brushSize;  
+            System.out.println(me.getX());
             //gc.save();  
             gc.setFill(color);  
             gc.fillOval(px, py, pw, ph);  
@@ -82,7 +84,14 @@ public class drawcontroller {
         	}
     };
     
-    
+    public void get(List<Double> tx,List<Double> ty,int temp[])
+    {
+    	//temp 数组 double类型
+    	//temp[0] 是否全部清除 y:1 n:0
+    	//temp[1] 是写还是擦除 写:1 擦:0
+    	//temp[2] 颜色 1 2 3 4 5 6 六种颜色
+    	//temp[3] 粗细 double 类型
+    }
 	public void drawinit(Stage drawStage,StackPane mainpane){
 		this.drawStage=drawStage;
 		//Canvas canvas = new Canvas(WIDTH, HEIGHT);  
