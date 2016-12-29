@@ -162,28 +162,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-    public void ppt()
-    {
-    	try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/view/ppt.fxml"));
-			StackPane pptpane = (StackPane) loader.load();
-			// Create the dialog Stage.
-			//Stage primaryStage = new Stage();
-			Stage pptStage = new Stage();
-			pptStage.setTitle("edit");
-			pptStage.initModality(Modality.WINDOW_MODAL);
-			Scene scene = new Scene(pptpane);
-			pptStage.setScene(scene);
-			// Set the person into the controller.
-			pptcontroller controller = loader.getController();
-			
-			pptStage.show();
-			
-		} catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     public void showdraw()
     {
     	try {

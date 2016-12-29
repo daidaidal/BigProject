@@ -50,6 +50,7 @@ public class drawcontroller {
             double py = me.getY() - brushSize / 2;  
             double pw = brushSize;  
             double ph = brushSize;  
+            System.out.println(me.getX());
             //gc.save();  
             gc.setFill(color);  
             gc.fillOval(px, py, pw, ph);  

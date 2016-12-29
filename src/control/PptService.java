@@ -23,8 +23,9 @@ import org.apache.poi.xslf.XSLFSlideShow;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 
 public class PptService {
-	public void translate(String path)
+	public int translate(String path)
 	{
+		int i=0;
 		try{
         	SlideShow ppt=null;
         	XMLSlideShow pptx=null;
@@ -32,20 +33,21 @@ public class PptService {
         ppt = new SlideShow(new HSLFSlideShow(path));
         Dimension pgsize = ppt.getPageSize();
         Slide[] slide = ppt.getSlides();
-        for (int i = 0; i < slide.length; i++) {
+        for (i = 0; i < slide.length; i++) {
         BufferedImage img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = img.createGraphics();
         //clear the drawing area
         graphics.setPaint(Color.white);
         graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width, pgsize.height));     //render
   	    slide[i].draw(graphics);     
-  	    FileOutputStream out = new FileOutputStream("slide-"  + String.valueOf(i+1) + ".png");
+  	    FileOutputStream out = new FileOutputStream("./src/image/"+String.valueOf(i+1) + ".png");
         javax.imageio.ImageIO.write(img, "png", out);
         out.close();
-        System.out.println(i);
+        System.out.println(i+1);
         }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();}
+		return i;
 	}
 }
