@@ -39,7 +39,6 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private Pane rootLayout;
     private Person person;
-    static private Socket socket=null;
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
     public void setFriendsData(ObservableList<Person> friendsData){
     	this.friendsData=friendsData;
@@ -156,7 +155,8 @@ public class MainApp extends Application {
     				} catch (SQLException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
-                }
+    				}
+                	
                 }});
             
         } catch (IOException e) {

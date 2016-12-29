@@ -2,7 +2,6 @@ package view;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -22,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.DataPack;
 import model.Person;
 
 public class mainviewcontroller {
@@ -241,38 +239,30 @@ public class mainviewcontroller {
 	private void handlesend()
 	{
 		String ip=null;
-			try {
-				Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
-				Statement stmt = connect.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from tongxun where id='" + friendsidLabel.getText() + "'");
-				if (rs.next()) {
-					 ip=rs.getString("ip");
-				}
-				connect.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
+			Statement stmt = connect.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from tongxun where id='" + friendsidLabel.getText() + "'");
+			if (rs.next()) {
+				 ip=rs.getString("ip");
 			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String send=null;
-		DataPack dp = new DataPack();
-		if(friendsjudgeLabel.getText().toString().equals("人")) {
+		if(friendsjudgeLabel.getText().toString().equals("人"))
 			send=person.getId()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
-			dp.setMode(1);
-		}
-		else {
+		else
 			send="qun^&^"+person.getId()+"^&^"+person.getName()+"^&^"+friendsidLabel.getText()+"^&^"+sendArea.getText();
-			dp.setMode(2);
-		}
 		String show = sendArea.getText();
 		sendArea.setText("");
 		try {
 			if(socket==null)
 				System.out.println("socket is null");
-			dp.setMsg(send);
-			dp.setX(null);
-			dp.setY(null);
-			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			out.writeObject(dp);
+			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			out.writeUTF(send);
 			out.flush();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
