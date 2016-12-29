@@ -1,6 +1,7 @@
 package view;
-
+import java.awt.Desktop;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -10,7 +11,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import control.DeleteService;
 import control.MainApp;
 import javafx.collections.ObservableList;
@@ -21,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DataPack;
 import model.Person;
@@ -320,6 +323,28 @@ public class mainviewcontroller {
 	{
 		mainapp.showdraw();
 	}
+	@FXML
+	private void handleshowppt()
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("选择ppt");
+		File file = fileChooser.showOpenDialog(mainStage);
+        if (file != null) {
+        	System.out.println(file);
+            openFile(file);
+        }
+	}
+	private void openFile(File file) {
+		Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(
+            		mainviewcontroller.class.getName()).log(
+                        Level.SEVERE, null, ex
+                    );
+        }
+    }
 	
 	
 }

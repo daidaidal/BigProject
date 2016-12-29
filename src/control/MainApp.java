@@ -6,7 +6,7 @@ import view.editcontroller;
 import view.jianquncontroller;
 import view.logincontroller;
 import view.mainviewcontroller;
-import view.showdrawcontroller;
+import view.pptcontroller;
 import view.signincontroller;
 import model.Person;
 import task.KeepTask;
@@ -69,7 +69,6 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/login.fxml"));
             rootLayout = (Pane) loader.load();
-
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -163,20 +162,23 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-    public void sshowdraw()
+    public void ppt()
     {
     	try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/view/showdraw.fxml"));
-			StackPane mainpane = (StackPane) loader.load();
+			loader.setLocation(MainApp.class.getResource("/view/ppt.fxml"));
+			StackPane pptpane = (StackPane) loader.load();
 			// Create the dialog Stage.
 			//Stage primaryStage = new Stage();
-			Stage drawStage = new Stage();
-
+			Stage pptStage = new Stage();
+			pptStage.setTitle("edit");
+			pptStage.initModality(Modality.WINDOW_MODAL);
+			Scene scene = new Scene(pptpane);
+			pptStage.setScene(scene);
 			// Set the person into the controller.
-			showdrawcontroller controller = loader.getController();
-
-			// Show the dialog and wait until the user closes it
+			pptcontroller controller = loader.getController();
+			
+			pptStage.show();
 			
 		} catch (IOException e) {
             e.printStackTrace();
