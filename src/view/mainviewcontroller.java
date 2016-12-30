@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import control.DeleteService;
 import control.MainApp;
 import control.PptService;
+import control.MyRecord;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,18 +35,18 @@ import model.Person;
 public class mainviewcontroller {
 	@FXML
     private TableView<Person> friendsTable;
-    @FXML 
+    @FXML
     private TableColumn<Person, String> nameColumn;
     @FXML
     private TableColumn<Person, String> companyColumn;
-    
+
 	@FXML
 	private Text nameText;
 	@FXML
 	private Text companyText;
 	@FXML
 	private Text emailText;
-	
+
 	@FXML
 	private Label friendsnameLabel;
 	@FXML
@@ -64,21 +65,21 @@ public class mainviewcontroller {
 	private ContextMenu cm;
 	@FXML
 	private Label friendsonlineLabel;
-	
+
 	private Person person;
 	private Stage mainStage;
 	private MainApp mainapp;
 	private Socket socket;
-	
+
 	public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
-       
+
     }
 	public void setSocket(Socket s)
 	{
 		this.socket=s;
 	}
-	public void setPerson(Person person) {  
+	public void setPerson(Person person) {
 		this.person=person;
 		nameText.setText(person.getName());
 		companyText.setText(person.getCompany());
@@ -101,16 +102,15 @@ public class mainviewcontroller {
         		cellData -> cellData.getValue().nameProperty());
         companyColumn.setCellValueFactory(
         		cellData -> cellData.getValue().companyProperty());
-        
         // Clear person details.
         showFriendsDetails(null);
 
         // Listen for selection changes and show the person details when changed.
 		friendsTable.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showFriendsDetails(newValue));
-		
+
 	}
-	
+
 	private void showFriendsDetails(Person person) {
     	if (person != null) {
     		// Fill the labels with info from the person object.
@@ -131,7 +131,7 @@ public class mainviewcontroller {
     		else
     			judge="人";
     		friendsjudgeLabel.setText(judge);
-    		
+
     		if(person.getJudge()==false)
 	    		try {
 					Connection connect = DriverManager.getConnection("jdbc:mysql://115.28.67.141:3306/bpdb", "bp_user", "123456");
@@ -146,8 +146,8 @@ public class mainviewcontroller {
 					e.printStackTrace();
 				}
     		friendsonlineLabel.setText(online);
-    	
-    		
+
+
     	} else {
     		// Person is null, remove all the text.
     		friendsnameLabel.setText("");
@@ -192,7 +192,7 @@ public class mainviewcontroller {
 					before="";
 				if(name!=null)
 					before=before+name+":"+"\n"+message+"\n";
-				else 
+				else
 					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
 				System.out.println("before:"+before);
 				friendsData.get(i).setShowtext(before);
@@ -204,11 +204,11 @@ public class mainviewcontroller {
 		{
 			if(friendsjudgeLabel.getText().equals("人"))
 				friendsshowArea.appendText(friendsnameLabel.getText()+":"+"\n"+message+"\n");
-			else if(friendsjudgeLabel.getText().equals("群"))	
+			else if(friendsjudgeLabel.getText().equals("群"))
 				friendsshowArea.appendText(name+":"+"\n"+message+"\n");
 		}
 	}
-	
+
 	@FXML
 	private void handleEdit()
 	{
@@ -230,7 +230,7 @@ public class mainviewcontroller {
 		else
 			judge=false;
 		d.delete(person.getId(), id,judge);
-		
+
 		ObservableList<Person> friendsData=mainapp.getFriendsData();
 		int len = friendsData.size();
 		for(int i=0;i<len;i++)
@@ -279,7 +279,7 @@ public class mainviewcontroller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//这么加来回切换会有bug
 		System.out.println("show:"+show);
 		String id1=friendsidLabel.getText();
@@ -298,7 +298,7 @@ public class mainviewcontroller {
 					before="";
 				if(name!=null)
 					before=before+name+":"+"\n"+message+"\n";
-				else 
+				else
 					before=before+friendsData.get(i).getName()+":"+"\n"+message+"\n";
 				System.out.println("before:"+before);
 				friendsData.get(i).setShowtext(before);
@@ -306,12 +306,12 @@ public class mainviewcontroller {
 				break;
 			}
 		}
-		
+
 		//friendsshowArea.appendText(person.getName()+":"+"\n"+show+"\n");
 		//friendsshowArea.appendText(person.getName()+":"+"\n"+message+"\n");
-		
-		
-		
+
+
+
 	}
 	@FXML
 	private void handledraw()
@@ -340,11 +340,11 @@ public class mainviewcontroller {
     			Stage pptStage = new Stage();
     			pptStage.setTitle("edit");
     			pptStage.initModality(Modality.WINDOW_MODAL);
-    			
+
     			// Set the person into the controller.
     			pptcontroller controller = loader.getController();
     			controller.init("1",number,pptpane,pptStage);
-    			
+
     		} catch (IOException e) {
                 e.printStackTrace();
             }
@@ -362,7 +362,7 @@ public class mainviewcontroller {
 		}
 		else if(friendsjudgeLabel.getText().equals("群"))
 		{
-			
+			mainapp.showqundocument();
 		}
 	}
 	private void openFile(File file) {
@@ -376,6 +376,6 @@ public class mainviewcontroller {
                     );
         }
     }
-	
-	
+
+
 }

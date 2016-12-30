@@ -29,6 +29,7 @@ import task.DrawReceiveTask;
 import task.KeepTask;
 import task.SingalTask;
 import view.addcontroller;
+import view.documentcontroller;
 import view.drawcontroller;
 import view.editcontroller;
 import view.jianquncontroller;
@@ -174,6 +175,27 @@ public class MainApp extends Application {
                 }});
             
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showqundocument()
+    {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/document.fxml"));
+			AnchorPane documentpane = (AnchorPane) loader.load();
+			// Create the dialog Stage.
+			//Stage primaryStage = new Stage();
+			Stage documentStage = new Stage();
+			documentStage.setTitle("群文件");
+			Scene scene = new Scene(documentpane);
+			documentStage.setScene(scene);
+			// Set the person into the controller.
+			documentcontroller controller = loader.getController();
+			// Show the dialog and wait until the user closes it
+			documentStage.showAndWait();;
+			
+		} catch (IOException e) {
             e.printStackTrace();
         }
     }
