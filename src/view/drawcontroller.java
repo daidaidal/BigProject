@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +48,27 @@ public class drawcontroller {
     private int judge=-1;
     private int ca_xie=1;
     
-    private Socket socket;
+    private Socket dSocket;
+    private String id;
+    private String hisid;
     
-    public Socket getSocket() {
-		return socket;
+	public String getId() {
+		return id;
 	}
-	public void setSocket(Socket socket) {
-		this.socket = socket;
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getHisid() {
+		return hisid;
+	}
+	public void setHisid(String hisid) {
+		this.hisid = hisid;
+	}
+	public Socket getdSocket() {
+		return dSocket;
+	}
+	public void setdSocket(Socket dSocket) {
+		this.dSocket = dSocket;
 	}
 
 	public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {  
@@ -92,8 +108,25 @@ public class drawcontroller {
     public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {  
         @Override  
         public void handle(MouseEvent me) {  
+        	try {
+				ObjectOutputStream out = new ObjectOutputStream(dSocket.getOutputStream());
+				ArrayList<Object> pack = new ArrayList<>();
+				pack.add(1);
+				pack.add(id);
+				pack.add(hisid);
+				pack.add(x);
+				pack.add(y);
+				pack.add(temp1);
+				out.writeObject(pack);
+				out.flush();
+				x.clear();
+				y.clear();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	
-        	}
+        }
     };
     
     public EventHandler<KeyEvent> voice=new EventHandler<KeyEvent>() {  

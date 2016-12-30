@@ -9,6 +9,16 @@ import javafx.stage.Stage;
 import view.messagecontroller;
 
 public class MessageService {
+	private messagecontroller controller;
+	
+	public messagecontroller getController() {
+		return controller;
+	}
+
+	public void setController(messagecontroller controller) {
+		this.controller = controller;
+	}
+
 	public void set(int judge){
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -21,7 +31,7 @@ public class MessageService {
 			ms.setScene(scene);
 			
 			
-			messagecontroller controller = loader.getController();
+			controller = loader.getController();
 			//密码错误 1
 			controller.setStage(ms);
 			controller.setJudge(judge);
