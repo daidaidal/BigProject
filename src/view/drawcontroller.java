@@ -1,10 +1,7 @@
 package view;
 
-<<<<<<< HEAD
 import javafx.scene.input.KeyEvent;
-=======
 import java.net.Socket;
->>>>>>> fc3b2344147406ddc7e7eb9bbb37cb7f1a65fd20
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,23 +39,7 @@ public class drawcontroller {
 
     private Canvas canvas = new Canvas(WIDTH, HEIGHT);
 
-<<<<<<< HEAD
-    private GraphicsContext gc = canvas.getGraphicsContext2D();
-    private List<Double> x = new ArrayList<>();
-    private List<Double> y=new ArrayList<>();
-    private int temp1[]={0,1,1,brushSize};
 
-    private int judge=-1;
-    private int ca_xie=1;
-
-    public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent me) {
-            double px = me.getX() - brushSize / 2;
-            double py = me.getY() - brushSize / 2;
-            double pw = brushSize;
-            double ph = brushSize;
-=======
     private GraphicsContext gc = canvas.getGraphicsContext2D(); 
 
     private ArrayList<Double> x = new ArrayList<>();
@@ -85,8 +66,6 @@ public class drawcontroller {
             double py = me.getY() - brushSize / 2;  
             double pw = brushSize;  
             double ph = brushSize;  
->>>>>>> fc3b2344147406ddc7e7eb9bbb37cb7f1a65fd20
-            System.out.println(me.getX());
             //gc.save();
             gc.setFill(color);
             gc.fillOval(px, py, pw, ph);
@@ -112,19 +91,11 @@ public class drawcontroller {
             //gc.restore();
         }
     };
-<<<<<<< HEAD
-
-    public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent me) {
-        	//gc.clearRect(me.getX(),me.getY(),400,200);
-=======
     
     public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {  
         @Override  
         public void handle(MouseEvent me) {  
         	
->>>>>>> fc3b2344147406ddc7e7eb9bbb37cb7f1a65fd20
         	}
     };
 
