@@ -1,15 +1,10 @@
 package view;
-import model.Person;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import view.messagecontroller;
 import control.GetFriends;
 import control.LoginService;
 import control.MainApp;
@@ -17,6 +12,7 @@ import control.MessageService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import model.Person;
 
 public class logincontroller {
 	@FXML
