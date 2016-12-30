@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Person;
 import task.DrawKeepTask;
+import task.DrawReceiveTask;
 import task.KeepTask;
 import task.SingalTask;
 import view.addcontroller;
@@ -38,6 +39,7 @@ import view.signincontroller;
 
 public class MainApp extends Application {
 
+	private drawcontroller controller;
 	private Socket mSocket;
 	private Socket dSocket;
     private Stage primaryStage;
@@ -54,7 +56,15 @@ public class MainApp extends Application {
     public MainApp()
     {
     }
-    private mainviewcontroller control_main_in_edit;
+    
+    public drawcontroller getController() {
+		return controller;
+	}
+	public void setController(drawcontroller controller) {
+		this.controller = controller;
+	}
+
+	private mainviewcontroller control_main_in_edit;
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -196,7 +206,9 @@ public class MainApp extends Application {
     	try {
 			dSocket = new Socket("115.28.67.141", 10241);
 			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
+			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
 			cachedThreadPool.execute(dkp);
+			cachedThreadPool.execute(drt);
 			ArrayList<Object> data = new ArrayList<>();
 			ObjectOutputStream outputStream = new ObjectOutputStream(dSocket.getOutputStream());
 			data.add(-1);
@@ -213,6 +225,8 @@ public class MainApp extends Application {
 		}
 		
     }
+    
+    
     public void showdraw(String hisid)
     {
     	try {
@@ -224,7 +238,10 @@ public class MainApp extends Application {
 			Stage drawStage = new Stage();
 
 			// Set the person into the controller.
-			drawcontroller controller = loader.getController();
+			controller = loader.getController();
+			controller.setdSocket(dSocket);
+			controller.setId(person.getId());
+			controller.setHisid(hisid);
 			controller.drawinit(drawStage,mainpane);
 			// Show the dialog and wait until the user closes it
 			
