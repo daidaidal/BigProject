@@ -1,6 +1,6 @@
 package view;
 
-import javafx.scene.input.KeyEvent;  
+import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.EventHandler;
@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import control.MyRecord;
 
 public class drawcontroller {
 	@FXML
@@ -25,136 +26,144 @@ public class drawcontroller {
 	private Button erazer;
 	@FXML
 	private StackPane drawpane;
-	
+
 	private boolean voicejudge;
 	private Stage drawStage;
-	
-	private static final int WIDTH = 600;  
-    private static final int HEIGHT = 350;  
-    private int brushSize = 8;  
-    private Color color = Color.BLACK; 
-    
-    private Canvas canvas = new Canvas(WIDTH, HEIGHT);  
+	private MyRecord cord;
 
-    private GraphicsContext gc = canvas.getGraphicsContext2D(); 
+	private static final int WIDTH = 600;
+    private static final int HEIGHT = 350;
+    private int brushSize = 8;
+    private Color color = Color.BLACK;
+
+    private Canvas canvas = new Canvas(WIDTH, HEIGHT);
+
+    private GraphicsContext gc = canvas.getGraphicsContext2D();
     private List<Double> x = new ArrayList<>();
     private List<Double> y=new ArrayList<>();
     private int temp1[]={0,1,1,brushSize};
-    
+
     private int judge=-1;
     private int ca_xie=1;
-    
-    public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {  
-        @Override  
-        public void handle(MouseEvent me) {  
-            double px = me.getX() - brushSize / 2;  
-            double py = me.getY() - brushSize / 2;  
-            double pw = brushSize;  
-            double ph = brushSize;  
+
+    public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent me) {
+            double px = me.getX() - brushSize / 2;
+            double py = me.getY() - brushSize / 2;
+            double pw = brushSize;
+            double ph = brushSize;
             System.out.println(me.getX());
-            //gc.save();  
-            gc.setFill(color);  
-            gc.fillOval(px, py, pw, ph);  
+            //gc.save();
+            gc.setFill(color);
+            gc.fillOval(px, py, pw, ph);
             //gc.restore();
             if(judge==-1)
             {
             	x.add(px);
             	y.add(py);
             }
-           
-        }  
+
+        }
     };
-    
-    public EventHandler<MouseEvent> erazer1=new EventHandler<MouseEvent>() {  
-        @Override  
-        public void handle(MouseEvent me) {  
-            double px = me.getX() - brushSize / 2;  
-            double py = me.getY() - brushSize / 2;  
-            double pw = brushSize;  
-            double ph = brushSize;  
-            //gc.save();   
+
+    public EventHandler<MouseEvent> erazer1=new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent me) {
+            double px = me.getX() - brushSize / 2;
+            double py = me.getY() - brushSize / 2;
+            double pw = brushSize;
+            double ph = brushSize;
+            //gc.save();
             gc.clearRect(px,py,pw,ph);
             //gc.restore();
-        }  
+        }
     };
-    
-    public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {  
-        @Override  
-        public void handle(MouseEvent me) {  
+
+    public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent me) {
         	//gc.clearRect(me.getX(),me.getY(),400,200);
         	}
     };
-    
-    public EventHandler<KeyEvent> voice=new EventHandler<KeyEvent>() {  
-        @Override  
-        public void handle(KeyEvent ke) {  
+
+    public EventHandler<KeyEvent> voice=new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent ke) {
         	if(ke.getCharacter()=="v")
         		if(voicejudge==false)
-        			;
+        			{
+								cord.capture();
+								voicejudge=true;
+							}
         		else if(voicejudge==true)
-        			;
-        } 
+        			{
+								cord.stop();
+								cord.save();
+								voicejudge=false;
+							}
+        }
     };
     public void get(List<Double> tx,List<Double> ty,int temp[])
     {
-    	//temp 数组 double类型
-    	//temp[0] 是否全部清除 y:1 n:0
-    	//temp[1] 是写还是擦除 写:1 擦:0
-    	//temp[2] 颜色 1 2 3 4 5 6 六种颜色
-    	//temp[3] 粗细 double 类型
+    	//temp 鏁扮粍 double绫诲瀷
+    	//temp[0] 鏄惁鍏ㄩ儴娓呴櫎 y:1 n:0
+    	//temp[1] 鏄啓杩樻槸鎿﹂櫎 鍐�:1 鎿�:0
+    	//temp[2] 棰滆壊 1 2 3 4 5 6 鍏棰滆壊
+    	//temp[3] 绮楃粏 double 绫诲瀷
     	if(temp[0]==1)
     		gc.clearRect(0,0,1000,1000);
-    	else 
+    	else
     	{
-    		if(temp[1]==1) //写
+    		if(temp[1]==1) //鍐�
     		{
     			Color colort = null;
     			if(temp[2]==1)
-    				colort=Color.rgb(0, 0, 0, 1); 
+    				colort=Color.rgb(0, 0, 0, 1);
     			else if (temp[2]==2)
     				colort=Color.rgb(135, 206, 250, 1);
     			else if (temp[2]==3)
-    				colort=Color.rgb(154, 255, 154, 1); 
+    				colort=Color.rgb(154, 255, 154, 1);
     			else if (temp[2]==4)
-    				colort=Color.rgb(255, 106, 106, 1); 
+    				colort=Color.rgb(255, 106, 106, 1);
     			else if (temp[2]==5)
     				colort=Color.rgb(238, 130, 238, 1);
     			else if (temp[2]==6)
     				colort=Color.rgb(255, 255, 0, 1);
     			for(int i=0;i<tx.size();i++)
     			{
-    				gc.setFill(colort);  
-    	            gc.fillOval(tx.get(i), ty.get(i),temp[3],temp[3]); 
+    				gc.setFill(colort);
+    	            gc.fillOval(tx.get(i), ty.get(i),temp[3],temp[3]);
     			}
     		}
-    		else if(temp[1]==0) //擦
+    		else if(temp[1]==0) //鎿�
     		{
     			for(int i=0;i<tx.size();i++)
-    	            gc.clearRect(tx.get(i), ty.get(i),temp[3],temp[3]); 
+    	            gc.clearRect(tx.get(i), ty.get(i),temp[3],temp[3]);
     		}
     	}
     }
 	public void drawinit(Stage drawStage,StackPane mainpane){
 		this.drawStage=drawStage;
-		//Canvas canvas = new Canvas(WIDTH, HEIGHT);  
-        //GraphicsContext gc = canvas.getGraphicsContext2D();  
-        //canvas.setOnMouseDragged(paint1); 
+		//Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        //GraphicsContext gc = canvas.getGraphicsContext2D();
+        //canvas.setOnMouseDragged(paint1);
 		voicejudge=false;
 		canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,paint1);
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,send);
         canvas.addEventHandler(KeyEvent.KEY_TYPED, voice);
-      //按住A键和F键分别缩小和增大画笔尺寸  
-        mainpane.getChildren().add(canvas);  
-        Scene scene = new Scene(mainpane); 
-        drawStage.setTitle("画板");  
-        drawStage.setScene(scene);  
-        drawStage.show();    
+      //鎸変綇A閿拰F閿垎鍒缉灏忓拰澧炲ぇ鐢荤瑪灏哄
+        mainpane.getChildren().add(canvas);
+        Scene scene = new Scene(mainpane);
+        drawStage.setTitle("鐢绘澘");
+        drawStage.setScene(scene);
+        drawStage.show();
 	}
-	
+
 	@FXML
     private void initialize() {
     }
-	
+
 	@FXML
 	private void handlesave()
 	{
@@ -163,14 +172,14 @@ public class drawcontroller {
 		else if(judge==1)
 			judge=-1;
 	}
-	
+
 	@FXML
 	private void handlehuanyuan()
 	{
 		for(int i=0;i<x.size();i++)
 		{
-			gc.setFill(color);  
-            gc.fillOval(x.get(i), y.get(i),brushSize,brushSize); 
+			gc.setFill(color);
+            gc.fillOval(x.get(i), y.get(i),brushSize,brushSize);
 		}
 	}
 	@FXML
@@ -211,47 +220,47 @@ public class drawcontroller {
 		temp1[3]=brushSize;
 	}
 	@FXML
-	private void colour1() //黑色
+	private void colour1() //榛戣壊
 	{
-        color = Color.rgb(0, 0, 0, 1);  
+        color = Color.rgb(0, 0, 0, 1);
         temp1[2]=1;
 	}
-	
+
 	@FXML
 	private void colour2() //LightSkyBlue	135 206 250
 	{
-        color = Color.rgb(135, 206, 250, 1);  
+        color = Color.rgb(135, 206, 250, 1);
         temp1[2]=2;
 	}
-	
+
 	@FXML
 	private void colour3() //PaleGreen1	154 255 154
 	{
-        color = Color.rgb(154, 255, 154, 1); 
+        color = Color.rgb(154, 255, 154, 1);
         temp1[2]=3;
 	}
-	
+
 	@FXML
 	private void colour4() //IndianRed1	255 106 106
 	{
-        color = Color.rgb(255, 106, 106, 1);  
+        color = Color.rgb(255, 106, 106, 1);
         temp1[2]=4;
 	}
-	
+
 	@FXML
 	private void colour5() //Violet	238 130 238
 	{
-        color = Color.rgb(238, 130, 238, 1);  
+        color = Color.rgb(238, 130, 238, 1);
         temp1[2]=5;
 	}
-	
-	
+
+
 	@FXML
 	private void colour6() //Yellow	255 255 0
 	{
-        color = Color.rgb(255, 255, 0, 1);  
+        color = Color.rgb(255, 255, 0, 1);
         temp1[2]=6;
 	}
-	
+
 
 }
