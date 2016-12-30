@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 public class DrawKeepTask implements Runnable {
 	private Socket socket;
-	private String id;
 	
-	public DrawKeepTask(Socket socket, String id) {
+	public DrawKeepTask(Socket socket) {
 		super();
 		this.socket = socket;
-		this.id = id;
 	}
 
 	@Override
@@ -30,7 +28,6 @@ public class DrawKeepTask implements Runnable {
 				}
 				ArrayList<Object> data = new ArrayList<>();
 				data.add(0);
-				data.add(id);
 				outputStream = new ObjectOutputStream(socket.getOutputStream());
 				outputStream.writeObject(data);
 				outputStream.flush();				

@@ -166,7 +166,12 @@ public class MainApp extends Application {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
+            ArrayList<Object> pack = new ArrayList<>();
+            pack.add(person.getId());
+            ObjectOutputStream out = new ObjectOutputStream(dSocket.getOutputStream());
+            out.writeObject(pack);
+            out.flush();
+			DrawKeepTask dkp = new DrawKeepTask(dSocket);
 			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
 			cachedThreadPool.execute(dkp);
 			cachedThreadPool.execute(drt);
