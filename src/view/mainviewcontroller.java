@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import control.DeleteService;
 import control.MainApp;
 import control.PptService;
@@ -19,7 +20,6 @@ import control.MyRecord;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -317,7 +317,9 @@ public class mainviewcontroller {
 	@FXML
 	private void handledraw()
 	{
-		mainapp.showdraw();
+		
+		String id=friendsidLabel.getText();
+		mainapp.showdrawpre(id);
 	}
 	@FXML
 	private void handleshowppt()

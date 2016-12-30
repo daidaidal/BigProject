@@ -1,22 +1,24 @@
 package task;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
-
-public class KeepTask implements Runnable {
+public class DrawKeepTask implements Runnable {
 	private Socket socket;
+	private String id;
 	
-	public KeepTask(Socket socket) {
+	public DrawKeepTask(Socket socket, String id) {
 		super();
 		this.socket = socket;
+		this.id = id;
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		DataOutputStream outputStream;
+		ObjectOutputStream outputStream;
 		while (socket != null)
 		{
 			try {
@@ -26,8 +28,11 @@ public class KeepTask implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				outputStream = new DataOutputStream(socket.getOutputStream());
-				outputStream.writeUTF("");
+				ArrayList<Object> data = new ArrayList<>();
+				data.add(0);
+				data.add(id);
+				outputStream = new ObjectOutputStream(socket.getOutputStream());
+				outputStream.writeObject(data);
 				outputStream.flush();				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
