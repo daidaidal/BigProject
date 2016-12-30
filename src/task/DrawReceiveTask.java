@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import control.MainApp;
 import control.Message2Service;
 import control.MessageService;
+import javafx.application.Platform;
 
 public class DrawReceiveTask implements Runnable {
 	private Socket socket;
@@ -39,7 +40,12 @@ public class DrawReceiveTask implements Runnable {
 				Integer mode = (Integer) data.get(0);
 				if (mode == -1) {
 					MessageService ms = new MessageService();
-					ms.set(2);
+					Platform.runLater(new Runnable() {
+					    @Override
+					    public void run() {					    	
+							ms.set(2);
+					    }
+					});
 					int choice = -1;
 					while(true){
 						choice = ms.getController().getChoice();
@@ -65,8 +71,13 @@ public class DrawReceiveTask implements Runnable {
 				else if(mode == -2){
 					String choice = (String)data.get(3);
 					if (choice.equals("y")){
-						m.close();
-						mApp.showdraw((String)data.get(1));
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	m.close();
+								mApp.showdraw((String)data.get(1));
+						    }
+						});						
 					}
 					else if(choice.equals("n")){
 						
