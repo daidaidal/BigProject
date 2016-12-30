@@ -1,23 +1,10 @@
 package control;
-import view.addcontroller;
-import view.drawcontroller;
-import view.editcontroller;
-import view.jianquncontroller;
-import view.logincontroller;
-import view.mainviewcontroller;
-import view.pptcontroller;
-import view.signincontroller;
-import model.Person;
-import task.DrawKeepTask;
-import task.KeepTask;
-import task.SingalTask;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -25,7 +12,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -37,6 +23,17 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Person;
+import task.DrawKeepTask;
+import task.KeepTask;
+import task.SingalTask;
+import view.addcontroller;
+import view.drawcontroller;
+import view.editcontroller;
+import view.jianquncontroller;
+import view.logincontroller;
+import view.mainviewcontroller;
+import view.signincontroller;
 
 public class MainApp extends Application {
 
@@ -170,7 +167,30 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-
+    public void showdrawpre(String hisid)
+    {
+    	Message2Service m=new Message2Service();
+    	m.set("正在等待对方确认...");
+    	try {
+			dSocket = new Socket("115.28.67.141", 10241);
+			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
+			cachedThreadPool.execute(dkp);
+			ArrayList<Object> data = new ArrayList<>();
+			ObjectOutputStream outputStream = new ObjectOutputStream(dSocket.getOutputStream());
+			data.add(-1);
+			data.add(person.getId());
+			data.add(hisid);
+			outputStream.writeObject(data);
+			outputStream.flush();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    }
     public void showdraw(String hisid)
     {
     	try {
@@ -185,16 +205,7 @@ public class MainApp extends Application {
 			drawcontroller controller = loader.getController();
 			controller.drawinit(drawStage,mainpane);
 			// Show the dialog and wait until the user closes it
-			dSocket = new Socket("115.28.67.141", 10241);
-			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
-			cachedThreadPool.execute(dkp);
-			ArrayList<Object> data = new ArrayList<>();
-			ObjectOutputStream outputStream = new ObjectOutputStream(dSocket.getOutputStream());
-			data.add(-1);
-			data.add(person.getId());
-			data.add(hisid);
-			outputStream.writeObject(data);
-			outputStream.flush();
+			
 			drawStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
