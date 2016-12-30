@@ -316,7 +316,8 @@ public class mainviewcontroller {
 	@FXML
 	private void handledraw()
 	{
-		mainapp.showdraw();
+		String id=friendsidLabel.getText();
+		mainapp.showdraw(id);
 	}
 	@FXML
 	private void handleshowppt()

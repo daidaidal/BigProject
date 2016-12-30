@@ -26,7 +26,7 @@ public class SingalTask implements Runnable {
 			DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 			outputStream.writeUTF(idd);
 			outputStream.flush();
-			while (true)
+			while (socket != null)
 			{
 				try {
 					socket.setSoTimeout(100);
@@ -40,7 +40,8 @@ public class SingalTask implements Runnable {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}				
+				}	
+				if (Thread.interrupted()) break;
 			}		
 		} catch (IOException e) {
 			// TODO: handle exception

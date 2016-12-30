@@ -1,5 +1,6 @@
 package view;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +38,23 @@ public class drawcontroller {
     private Canvas canvas = new Canvas(WIDTH, HEIGHT);  
 
     private GraphicsContext gc = canvas.getGraphicsContext2D(); 
-    private List<Double> x = new ArrayList<>();
-    private List<Double> y=new ArrayList<>();
+    private ArrayList<Double> x = new ArrayList<>();
+    private ArrayList<Double> y=new ArrayList<>();
+    private int[] temp1={0,1,1,brushSize};
     
     private int judge=-1;
     private int ca_xie=1;
     
-    public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {  
+    private Socket socket;
+    
+    public Socket getSocket() {
+		return socket;
+	}
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+	public EventHandler<MouseEvent> paint1=new EventHandler<MouseEvent>() {  
         @Override  
         public void handle(MouseEvent me) {  
             double px = me.getX() - brushSize / 2;  
@@ -80,17 +91,18 @@ public class drawcontroller {
     public EventHandler<MouseEvent> send=new EventHandler<MouseEvent>() {  
         @Override  
         public void handle(MouseEvent me) {  
-        	//gc.clearRect(me.getX(),me.getY(),400,200);
+        	
         	}
     };
     
-    public void get(List<Double> tx,List<Double> ty,int temp[])
+    public void get(ArrayList<Double> tx,ArrayList<Double> ty,int temp[])
     {
     	//temp 数组 double类型
     	//temp[0] 是否全部清除 y:1 n:0
     	//temp[1] 是写还是擦除 写:1 擦:0
     	//temp[2] 颜色 1 2 3 4 5 6 六种颜色
     	//temp[3] 粗细 double 类型
+    	
     }
 	public void drawinit(Stage drawStage,StackPane mainpane){
 		this.drawStage=drawStage;
@@ -133,6 +145,7 @@ public class drawcontroller {
 	private void deleteall()
 	{
 		gc.clearRect(0,0,1000,1000);
+		
 	}
 	@FXML
 	private void cachu()
