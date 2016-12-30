@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import control.MainApp;
@@ -80,14 +81,15 @@ public class DrawReceiveTask implements Runnable {
 				}else if(mode == 2){
 					
 				}
-			} catch (SocketException e) {
-				// TODO Auto-generated catch block
+			} catch (SocketTimeoutException e){
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			} catch (SocketException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

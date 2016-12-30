@@ -24,6 +24,7 @@ public class Message2Service {
 					
 					
 			message2controller controller = loader.getController();
+			controller.setMessage(message);
 			ms.show();
 		}
 		catch (IOException e) {
