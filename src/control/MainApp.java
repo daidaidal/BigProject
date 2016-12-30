@@ -39,6 +39,7 @@ import view.signincontroller;
 
 public class MainApp extends Application {
 
+	private Message2Service m;
 	private drawcontroller controller;
 	private Socket mSocket;
 	private Socket dSocket;
@@ -47,6 +48,7 @@ public class MainApp extends Application {
     private Person person;
     private ExecutorService cachedThreadPool;
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
+    
     public void setFriendsData(ObservableList<Person> friendsData){
     	this.friendsData=friendsData;
     }
@@ -153,6 +155,11 @@ public class MainApp extends Application {
             cachedThreadPool = Executors.newCachedThreadPool();
             SingalTask st = new SingalTask(mSocket, controller,idd);
             KeepTask kt = new KeepTask(mSocket);
+            dSocket = new Socket("115.28.67.141", 10241);
+			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
+			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
+			cachedThreadPool.execute(dkp);
+			cachedThreadPool.execute(drt);
             cachedThreadPool.execute(st);
             cachedThreadPool.execute(kt);
             // Show the dialog and wait until the user closes it
@@ -201,14 +208,9 @@ public class MainApp extends Application {
     }
     public void showdrawpre(String hisid)
     {
-    	Message2Service m=new Message2Service();
+    	m=new Message2Service();
     	m.set("正在等待对方确认...");
     	try {
-			dSocket = new Socket("115.28.67.141", 10241);
-			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
-			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
-			cachedThreadPool.execute(dkp);
-			cachedThreadPool.execute(drt);
 			ArrayList<Object> data = new ArrayList<>();
 			ObjectOutputStream outputStream = new ObjectOutputStream(dSocket.getOutputStream());
 			data.add(-1);
