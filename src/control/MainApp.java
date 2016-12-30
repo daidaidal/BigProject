@@ -155,13 +155,22 @@ public class MainApp extends Application {
             cachedThreadPool = Executors.newCachedThreadPool();
             SingalTask st = new SingalTask(mSocket, controller,idd);
             KeepTask kt = new KeepTask(mSocket);
-            dSocket = new Socket("115.28.67.141", 10241);
+            cachedThreadPool.execute(st);
+            cachedThreadPool.execute(kt);
+            try {
+            	dSocket = new Socket("115.28.67.141", 10241);			
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			DrawKeepTask dkp = new DrawKeepTask(dSocket, person.getId());
 			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
 			cachedThreadPool.execute(dkp);
 			cachedThreadPool.execute(drt);
-            cachedThreadPool.execute(st);
-            cachedThreadPool.execute(kt);
+            
             // Show the dialog and wait until the user closes it
             primaryStage.show();
             
