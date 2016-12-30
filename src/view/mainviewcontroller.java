@@ -101,7 +101,6 @@ public class mainviewcontroller {
         		cellData -> cellData.getValue().nameProperty());
         companyColumn.setCellValueFactory(
         		cellData -> cellData.getValue().companyProperty());
-        
         // Clear person details.
         showFriendsDetails(null);
 
@@ -362,7 +361,7 @@ public class mainviewcontroller {
 		}
 		else if(friendsjudgeLabel.getText().equals("群"))
 		{
-			
+			mainapp.showqundocument();
 		}
 	}
 	private void openFile(File file) {
