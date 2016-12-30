@@ -349,6 +349,20 @@ public class mainviewcontroller {
             //openFile(file);
         }
 	}
+	@FXML
+	private void handledocument()
+	{
+		if(friendsjudgeLabel.getText().equals("人"))
+		{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("选择ppt");
+			File file = fileChooser.showOpenDialog(mainStage);
+		}
+		else if(friendsjudgeLabel.getText().equals("群"))
+		{
+			
+		}
+	}
 	private void openFile(File file) {
 		Desktop desktop = Desktop.getDesktop();
         try {
