@@ -3,6 +3,7 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.ChoiceHolder;
 
 public class messagecontroller {
 	@FXML
@@ -12,13 +13,13 @@ public class messagecontroller {
     }
 	private  int judge;
 	private Stage ms;
-	private int choice = -1;
+	private ChoiceHolder ch;
 	
-	public int getChoice() {
-		return choice;
+	public ChoiceHolder getCh() {
+		return ch;
 	}
-	public void setChoice(int choice) {
-		this.choice = choice;
+	public void setCh(ChoiceHolder ch) {
+		this.ch = ch;
 	}
 	public void setStage(Stage ms)
 	{
@@ -39,7 +40,7 @@ public class messagecontroller {
 		if(judge==1)
 			ms.close();
 		else if(judge==2){
-			setChoice(1);
+			ch.set(1);
 			ms.close();
 		}
 			
@@ -50,7 +51,7 @@ public class messagecontroller {
 		if(judge==1)
 			ms.close();
 		else if (judge==2){
-			setChoice(-1);
+			ch.set(0);
 			ms.close();
 		}
 	}

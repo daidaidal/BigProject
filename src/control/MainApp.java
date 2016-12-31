@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.ChoiceHolder;
 import model.Person;
 import task.DrawKeepTask;
 import task.DrawReceiveTask;
@@ -172,7 +173,9 @@ public class MainApp extends Application {
             out.writeObject(pack);
             out.flush();
 			DrawKeepTask dkp = new DrawKeepTask(dSocket);
-			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m);
+			ChoiceHolder ch = new ChoiceHolder();
+			Message3Service ms = new Message3Service(ch);
+			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m, ms,ch);
 			cachedThreadPool.execute(dkp);
 			cachedThreadPool.execute(drt);
             

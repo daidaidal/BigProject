@@ -10,21 +10,27 @@ import java.util.ArrayList;
 
 import control.MainApp;
 import control.Message2Service;
-import control.MessageService;
+import control.Message3Service;
 import javafx.application.Platform;
+import model.ChoiceHolder;
 
 public class DrawReceiveTask implements Runnable {
 	private Socket socket;
 	private MainApp mApp;
 	private String id;
 	private Message2Service m;
-	
-	public DrawReceiveTask(Socket socket, MainApp mApp, String id, Message2Service m) {
+	private Message3Service ms;
+	private ChoiceHolder ch;
+
+	public DrawReceiveTask(Socket socket, MainApp mApp, String id, Message2Service m, Message3Service ms,
+			ChoiceHolder ch) {
 		super();
 		this.socket = socket;
 		this.mApp = mApp;
 		this.id = id;
 		this.m = m;
+		this.ms = ms;
+		this.ch = ch;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,19 +44,14 @@ public class DrawReceiveTask implements Runnable {
 				inputStream = new ObjectInputStream(socket.getInputStream());
 				ArrayList<Object> data = (ArrayList<Object>) inputStream.readObject();
 				Integer mode = (Integer) data.get(0);
-				if (mode == -1) {
-					MessageService ms = new MessageService();
+				if (mode == -1) {			
 					Platform.runLater(new Runnable() {
 					    @Override
 					    public void run() {					    	
 							ms.set(2);
 					    }
 					});
-					int choice = -1;
-					while(true){
-						choice = ms.getController().getChoice();
-						if (choice != -1) break;
-					}
+					int choice = ch.get();
 					ArrayList<Object> pack = new ArrayList<>();
 					pack.add(-2);
 					pack.add(id);
@@ -60,6 +61,7 @@ public class DrawReceiveTask implements Runnable {
 						ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 						out.writeObject(pack);
 						out.flush();
+						System.out.println("-2 sent");
 					}
 					else if(choice == 0){
 						pack.add("n");
@@ -69,6 +71,7 @@ public class DrawReceiveTask implements Runnable {
 					}
 				}
 				else if(mode == -2){
+					System.out.println("-2 get");
 					String choice = (String)data.get(3);
 					if (choice.equals("y")){
 						Platform.runLater(new Runnable() {
