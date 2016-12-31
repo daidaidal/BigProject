@@ -86,11 +86,8 @@ public class drawcontroller {
             gc.setFill(color);
             gc.fillOval(px, py, pw, ph);
             //gc.restore();
-            if(judge==-1)
-            {
-            	x.add(px);
-            	y.add(py);
-            }
+            x.add(px);
+            y.add(py);
 
         }
     };
@@ -184,7 +181,12 @@ public class drawcontroller {
     		else if(temp[1]==0) //鎿�
     		{
     			for(int i=0;i<tx.size();i++)
-    	            gc.clearRect(tx.get(i), ty.get(i),temp[3],temp[3]);
+    	        {
+    				System.out.println(tx);
+    				System.out.println(ty);
+    				System.out.println(temp[3]);
+    				gc.clearRect(tx.get(i), ty.get(i),temp[3],temp[3]);
+    	        }
     		}
     	}
 
