@@ -151,11 +151,11 @@ public class drawcontroller {
     };
     public void get(List<Double> tx,List<Double> ty,int temp[])
     {
-    	//temp 鏁扮粍 double绫诲瀷
-    	//temp[0] 鏄惁鍏ㄩ儴娓呴櫎 y:1 n:0
-    	//temp[1] 鏄啓杩樻槸鎿﹂櫎 鍐�:1 鎿�:0
-    	//temp[2] 棰滆壊 1 2 3 4 5 6 鍏棰滆壊
-    	//temp[3] 绮楃粏 double 绫诲瀷
+    	//temp 数组 double类型
+    	//temp[0] 是否全部清除 y:1 n:0
+    	//temp[1] 是写还是擦除 写:1 擦:0
+    	//temp[2] 颜色 1 2 3 4 5 6 六种颜色
+    	//temp[3] 粗细 double 类型
     	if(temp[0]==1)
     		gc.clearRect(0,0,1000,1000);
     	else
@@ -201,7 +201,7 @@ public class drawcontroller {
       //鎸変綇A閿拰F閿垎鍒缉灏忓拰澧炲ぇ鐢荤瑪灏哄
         mainpane.getChildren().add(canvas);
         Scene scene = new Scene(mainpane);
-        drawStage.setTitle("鐢绘澘");
+        drawStage.setTitle("画板");
         drawStage.setScene(scene);
         drawStage.show();
 	}
