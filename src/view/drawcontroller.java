@@ -99,6 +99,8 @@ public class drawcontroller {
             double py = me.getY() - brushSize / 2;
             double pw = brushSize;
             double ph = brushSize;
+            x.add(px);
+            y.add(py);
             //gc.save();
             gc.clearRect(px,py,pw,ph);
             //gc.restore();
