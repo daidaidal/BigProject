@@ -175,6 +175,7 @@ public class MainApp extends Application {
 			DrawKeepTask dkp = new DrawKeepTask(dSocket);
 			ChoiceHolder ch = new ChoiceHolder();
 			Message3Service ms = new Message3Service(ch);
+			m = new Message2Service();
 			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m, ms,ch);
 			cachedThreadPool.execute(dkp);
 			cachedThreadPool.execute(drt);
@@ -225,7 +226,6 @@ public class MainApp extends Application {
     }
     public void showdrawpre(String hisid)
     {
-    	m=new Message2Service();
     	m.set("正在等待对方确认...");
     	try {
 			ArrayList<Object> data = new ArrayList<>();
@@ -235,6 +235,7 @@ public class MainApp extends Application {
 			data.add(hisid);
 			outputStream.writeObject(data);
 			outputStream.flush();
+			System.out.println("-1 out");
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

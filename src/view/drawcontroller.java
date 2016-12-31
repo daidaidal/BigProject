@@ -122,6 +122,7 @@ public class drawcontroller {
 				pack.add(temp1);
 				out.writeObject(pack);
 				out.flush();
+				System.out.println("1 out");
 				x.clear();
 				y.clear();
 			} catch (IOException e) {

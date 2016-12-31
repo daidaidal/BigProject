@@ -62,6 +62,12 @@ public class DrawReceiveTask implements Runnable {
 						out.writeObject(pack);
 						out.flush();
 						System.out.println("-2 sent");
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+								mApp.showdraw((String)data.get(1));
+						    }
+						});	
 					}
 					else if(choice == 0){
 						pack.add("n");
