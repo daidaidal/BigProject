@@ -233,6 +233,26 @@ public class drawcontroller {
 	{
 		gc.clearRect(0,0,1000,1000);
 		temp1[0]=1;
+		
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(dSocket.getOutputStream());
+			ArrayList<Object> pack = new ArrayList<>();
+			pack.add(1);
+			pack.add(id);
+			pack.add(hisid);
+			pack.add(x);
+			pack.add(y);
+			pack.add(temp1);
+			out.writeObject(pack);
+			out.flush();
+			System.out.println("1 out");
+			x.clear();
+			y.clear();
+			temp1[0]=0;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	@FXML
 	private void cachu()
