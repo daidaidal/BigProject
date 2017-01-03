@@ -1,0 +1,8 @@
+.background {
+    -fx-background-image:url(p6.jpg);
+    -fx-background-size:100%;
+}
+
+.button:hover{
+	-fx-background-color:#D8D8D8;
+}

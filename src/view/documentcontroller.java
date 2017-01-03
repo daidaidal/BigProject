@@ -17,6 +17,8 @@ public class documentcontroller {
 	@FXML 
 	private TableColumn<Document, String> nameColumn;
 	@FXML
+	
+	
 	private void initialize() {
 		// Initialize the person table with the two columns.
         nameColumn.setCellValueFactory(

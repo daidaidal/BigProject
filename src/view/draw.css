@@ -1,0 +1,42 @@
+#black{
+	-fx-background-color:black;
+}
+#blue{
+	-fx-background-color:#00CCFF;
+}
+#red{
+	-fx-background-color:red;
+}
+#green{
+	-fx-background-color:#66CC66;
+}
+#purple{
+	-fx-background-color:#9966FF;
+}
+#yellow{
+	-fx-background-color:#FFFF00;
+}
+
+
+#black:hover{
+	-fx-background-color:#330000;
+}
+#blue:hover{
+	-fx-background-color:#00FFFF;
+}
+#red:hover{
+	-fx-background-color:#FF6633;
+}
+#green:hover{
+	-fx-background-color:#33FF99;
+}
+#purple:hover{
+	-fx-background-color:#9999FF;
+}
+#yellow:hover{
+	-fx-background-color:#FFFF99;
+}
+
+.button:hover{
+	-fx-background-color:#B0B0B0;
+}

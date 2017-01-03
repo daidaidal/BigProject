@@ -28,6 +28,18 @@ public class drawcontroller {
 	@FXML
 	private Button erazer;
 	@FXML
+	private Button black;
+	@FXML
+	private Button blue;
+	@FXML
+	private Button green;
+	@FXML
+	private Button red;
+	@FXML
+	private Button purple;
+	@FXML
+	private Button yellow;
+	@FXML
 	private StackPane drawpane;
 
 	private boolean voicejudge;

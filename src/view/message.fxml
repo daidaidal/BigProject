@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.messagecontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="406.0" styleClass="background" stylesheets="@message.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.messagecontroller">
    <children>
       <Text fx:id="message" layoutX="188.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Button layoutX="119.0" layoutY="131.0" mnemonicParsing="false" onAction="#handleok" text="确认" />

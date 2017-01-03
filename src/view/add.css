@@ -1,0 +1,15 @@
+.anchor-pane {
+  
+    -fx-background-image:url(p3.jpg);
+    -fx-background-size:100%;
+    }
+.background{
+	-fx-background-image:url(p1.png);
+	-fx-background-size:100%;
+}
+.button{
+	-fx-background-color:#888888;
+}
+.button:hover {
+    -fx-background-color: powderblue ;
+}
