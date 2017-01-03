@@ -40,3 +40,6 @@
 .button:hover{
 	-fx-background-color:#B0B0B0;
 }
+.background{
+	-fx-background-color:#FFFFFF;
+}

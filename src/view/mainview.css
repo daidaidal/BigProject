@@ -1,4 +1,13 @@
 .background {
-    -fx-background-image:url(p4.jpg);
+    -fx-background-image:url(pp5.png);
     -fx-background-size:cover; 
+}
+#friendsTable
+{
+	-fx-background-image:url(pp7.png);
+	 -fx-background-size:cover; 
+}
+#friendsshowArea{
+    -fx-image:url(pp6.png);
+    -fx-size:cover; 
 }
