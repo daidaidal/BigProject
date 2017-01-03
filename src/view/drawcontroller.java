@@ -49,7 +49,6 @@ public class drawcontroller {
     private int[] temp1={0,1,1,brushSize};
 
     
-    private int judge=-1;
     private int ca_xie=1;
     
     private Socket dSocket;
@@ -184,9 +183,6 @@ public class drawcontroller {
     		{
     			for(int i=0;i<tx.size();i++)
     	        {
-    				System.out.println(tx);
-    				System.out.println(ty);
-    				System.out.println(temp[3]);
     				gc.clearRect(tx.get(i), ty.get(i),temp[3],temp[3]);
     	        }
     		}
@@ -214,24 +210,6 @@ public class drawcontroller {
     private void initialize() {
     }
 
-	@FXML
-	private void handlesave()
-	{
-		if(judge==-1)
-			judge=1;
-		else if(judge==1)
-			judge=-1;
-	}
-
-	@FXML
-	private void handlehuanyuan()
-	{
-		for(int i=0;i<x.size();i++)
-		{
-			gc.setFill(color);
-            gc.fillOval(x.get(i), y.get(i),brushSize,brushSize);
-		}
-	}
 	@FXML
 	private void deleteall()
 	{
