@@ -195,11 +195,12 @@ public class FileReceiveTask implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		ObjectInputStream inputStream;
 		while(socket != null){
 			
 			try {
 				socket.setSoTimeout(100);
-				ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+				inputStream = new ObjectInputStream(socket.getInputStream());
 				reader(inputStream);
 			} catch (SocketTimeoutException e) {
 				continue;
