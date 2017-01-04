@@ -42,7 +42,8 @@ public class FileReceiveTask implements Runnable {
 		try {
 			ArrayList<Object> data = (ArrayList<Object>) inputStream.readObject();	
 			Integer mode = (Integer) data.get(0);
-			if (mode == -1) {			
+			if (mode == -1) {	
+				System.out.println("-1 get");
 				Platform.runLater(new Runnable() {
 				    @Override
 				    public void run() {					    	
@@ -50,6 +51,8 @@ public class FileReceiveTask implements Runnable {
 				    }
 				});
 				int choice = ch.get();
+				ch = new ChoiceHolder();
+				System.out.println("choice get");
 				ArrayList<Object> pack = new ArrayList<>();
 				pack.add(-2);
 				pack.add(id);
@@ -84,6 +87,12 @@ public class FileReceiveTask implements Runnable {
 					ObjectOutputStream out0 = new ObjectOutputStream(socket.getOutputStream());
 					out0.writeObject(pack0);
 					out0.flush();
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					byte [] b = new byte[4096]; 
 					long times = file.length() / 4096;
 					long left = file.length() % 4096;
@@ -147,15 +156,15 @@ public class FileReceiveTask implements Runnable {
 				System.out.println("1 get");
 			}
 			else if(mode == 2){
+				System.out.println("2 get");
 				String index = (String) data.get(3);
 				int order = (int) data.get(4);
 				byte [] b = (byte[]) data.get(5);
 				FileData fd = fdMap.get(index);
 				fd.setCreated(true);
-				String path = "c:" + File.pathSeparator + "bigproject" + File.pathSeparator + index 
-						+ File.pathSeparator;
+				String path = "c://bigproject" + "//" + index + "//";
 				File f = new File(path);
-				if (f.exists()) f.mkdirs();
+				if (!f.exists()) f.mkdirs();
 				path += fd.getFilename();
 				RandomAccessFile rs = new RandomAccessFile(path, "rw");
 				rs.seek(order * 4096);

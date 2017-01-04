@@ -228,7 +228,7 @@ public class MainApp extends Application {
             out1.flush();
 			DrawKeepTask fkp = new DrawKeepTask(fSocket);
 			ChoiceHolder ch1 = new ChoiceHolder();
-			Message3Service ms1 = new Message3Service(ch);
+			Message3Service ms1 = new Message3Service(ch1);
 			FileReceiveTask frt =  new FileReceiveTask(fileMap, fSocket, this, person.getId(), ms1, ch1);
 			cachedThreadPool.execute(fkp);
 			cachedThreadPool.execute(frt);
