@@ -50,6 +50,7 @@ public class FileReceiveTask implements Runnable {
 				    }
 				});
 				int choice = ch.get();
+				ch = new ChoiceHolder();
 				ArrayList<Object> pack = new ArrayList<>();
 				pack.add(-2);
 				pack.add(id);
@@ -84,6 +85,12 @@ public class FileReceiveTask implements Runnable {
 					ObjectOutputStream out0 = new ObjectOutputStream(socket.getOutputStream());
 					out0.writeObject(pack0);
 					out0.flush();
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					byte [] b = new byte[4096]; 
 					long times = file.length() / 4096;
 					long left = file.length() % 4096;
