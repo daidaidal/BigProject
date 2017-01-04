@@ -2,7 +2,10 @@ package view;
 import java.awt.Desktop;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -10,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,11 +74,16 @@ public class mainviewcontroller {
 	private Stage mainStage;
 	private MainApp mainapp;
 	private Socket socket;
-
+	private Socket fSocket;
 	public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
 
     }
+
+	public void setfSocket(Socket fSocket) {
+		this.fSocket = fSocket;
+	}
+
 	public void setSocket(Socket s)
 	{
 		this.socket=s;
@@ -357,8 +366,84 @@ public class mainviewcontroller {
 		if(friendsjudgeLabel.getText().equals("人"))
 		{
 			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("选择ppt");
 			File file = fileChooser.showOpenDialog(mainStage);
+			if (file == null) return;
+			String id = mainapp.getPerson().getId();
+			String hisid = friendsidLabel.getText();
+			String online = friendsonlineLabel.getText();
+			String index = id + "to" + hisid + "file" + mainapp.getFilenum();
+			if (online.equals("online")){
+				mainapp.filepre(hisid);				
+				mainapp.setIndex(index);
+				mainapp.setFilenum(mainapp.getFilenum() + 1);
+				mainapp.setFile(index, file);
+			}
+			else if(online.equals("offline")){
+				ArrayList<Object> pack0 = new ArrayList<>();
+				pack0.add(1);
+				pack0.add(id);
+				pack0.add(hisid);
+				pack0.add(index);
+				pack0.add(file.getName());
+				pack0.add(file.length());
+				try {
+					ObjectOutputStream out0 = new ObjectOutputStream(fSocket.getOutputStream());
+					out0.writeObject(pack0);
+					out0.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				byte [] b = new byte[4096]; 
+				long times = file.length() / 4096;
+				long left = file.length() % 4096;
+				byte [] b_left = new byte[(int)left];
+				if (left != 0)
+					times++;	
+				try {
+					RandomAccessFile ra = new RandomAccessFile(file, "r");
+					for (int i = 0; i < times;i++){
+						if (i != times - 1){
+							ra.seek(i * 4096);
+							ra.read(b);
+							ArrayList<Object> pack = new ArrayList<>();
+							pack.add(3);
+							pack.add(id);
+							pack.add(hisid);
+							pack.add(index);
+							pack.add(i);
+							pack.add(b);
+							ObjectOutputStream out = new ObjectOutputStream(fSocket.getOutputStream());
+							out.writeObject(pack);
+							out.flush();
+							
+						}									
+						else {
+							ra.seek(i * 4096);
+							ra.read(b_left);
+							ArrayList<Object> pack = new ArrayList<>();
+							pack.add(3);
+							pack.add(id);
+							pack.add(hisid);
+							pack.add(index);
+							pack.add(i);
+							pack.add(b_left);
+							ObjectOutputStream out = new ObjectOutputStream(fSocket.getOutputStream());
+							out.writeObject(pack);
+							out.flush();
+						}	
+					}
+					ra.close();
+					System.out.println("file out");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 		}
 		else if(friendsjudgeLabel.getText().equals("群"))
 		{

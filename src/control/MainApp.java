@@ -1,4 +1,5 @@
 package control;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +29,7 @@ import model.ChoiceHolder;
 import model.Person;
 import task.DrawKeepTask;
 import task.DrawReceiveTask;
+import task.FileReceiveTask;
 import task.KeepTask;
 import task.SingalTask;
 import view.addcontroller;
@@ -40,10 +43,14 @@ import view.signincontroller;
 
 public class MainApp extends Application {
 
+	private String index;
+	private int filenum = 0;
+	private HashMap<String, File> fileMap = new HashMap<>();
 	private Message2Service m;
 	private drawcontroller controller;
 	private Socket mSocket;
 	private Socket dSocket;
+	private Socket fSocket;
     private Stage primaryStage;
     private Pane rootLayout;
     private Person person;
@@ -60,7 +67,28 @@ public class MainApp extends Application {
     {
     }
     
-    public drawcontroller getController() {
+	public String getIndex() {
+		return index;
+	}
+	public void setIndex(String index) {
+		this.index = index;
+	}
+	public Person getPerson() {
+		return person;
+	}
+	public HashMap<String, File> getFileMap() {
+		return fileMap;
+	}
+	public void setFile(String index, File file) {
+		fileMap.put(index, file);
+	}
+	public int getFilenum() {
+		return filenum;
+	}
+	public void setFilenum(int filenum) {
+		this.filenum = filenum;
+	}
+	public drawcontroller getController() {
 		return controller;
 	}
 	public void setController(drawcontroller controller) {
@@ -179,7 +207,31 @@ public class MainApp extends Application {
 			DrawReceiveTask drt = new DrawReceiveTask(dSocket, this, person.getId(), m, ms,ch);
 			cachedThreadPool.execute(dkp);
 			cachedThreadPool.execute(drt);
-            
+            /*
+             * 
+             */
+			//fileMap.put(person.getId()+, value)
+			try {
+            	fSocket = new Socket("115.28.67.141", 10242);	
+            	controller.setfSocket(fSocket);
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            ArrayList<Object> pack1 = new ArrayList<>();
+            pack1.add(person.getId());
+            ObjectOutputStream out1 = new ObjectOutputStream(fSocket.getOutputStream());
+            out1.writeObject(pack1);
+            out1.flush();
+			DrawKeepTask fkp = new DrawKeepTask(fSocket);
+			ChoiceHolder ch1 = new ChoiceHolder();
+			Message3Service ms1 = new Message3Service(ch);
+			FileReceiveTask frt =  new FileReceiveTask(fileMap, fSocket, this, person.getId(), ms1, ch1);
+			cachedThreadPool.execute(fkp);
+			cachedThreadPool.execute(frt);
             // Show the dialog and wait until the user closes it
             primaryStage.show();
             
@@ -223,6 +275,26 @@ public class MainApp extends Application {
 		} catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void filepre(String hisid)
+    {
+    	try {
+			ArrayList<Object> data = new ArrayList<>();
+			ObjectOutputStream outputStream = new ObjectOutputStream(fSocket.getOutputStream());
+			data.add(-1);
+			data.add(person.getId());
+			data.add(hisid);
+			outputStream.writeObject(data);
+			outputStream.flush();
+			System.out.println("-1 out");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
     }
     public void showdrawpre(String hisid)
     {

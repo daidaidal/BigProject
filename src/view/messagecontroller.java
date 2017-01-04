@@ -33,6 +33,9 @@ public class messagecontroller {
 		else if(judge == 2){
 			message.setText("白板请求");
 		}
+		else if (judge == 3){
+			message.setText("文件请求");
+		}
 	}
 	@FXML
 	private void handleok()
@@ -40,6 +43,10 @@ public class messagecontroller {
 		if(judge==1)
 			ms.close();
 		else if(judge==2){
+			ch.set(1);
+			ms.close();
+		}
+		else if(judge == 3){
 			ch.set(1);
 			ms.close();
 		}
@@ -51,6 +58,10 @@ public class messagecontroller {
 		if(judge==1)
 			ms.close();
 		else if (judge==2){
+			ch.set(0);
+			ms.close();
+		}
+		else if(judge == 3){
 			ch.set(0);
 			ms.close();
 		}
