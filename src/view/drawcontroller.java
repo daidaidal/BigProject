@@ -142,7 +142,7 @@ public class drawcontroller {
        }
     };
 
-    public EventHandler<KeyEvent> voice=new EventHandler<KeyEvent>() {
+    public EventHandler<KeyEvent> voice_press=new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent ke) {
         	if(ke.getCharacter()=="v")
@@ -150,13 +150,20 @@ public class drawcontroller {
         			{
 								cord.capture();
 								voicejudge=true;
-							}
-        		else if(voicejudge==true)
+        			}
+        }
+    };
+    
+    public EventHandler<KeyEvent> voice_release=new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent ke) {
+        	if(ke.getCharacter()=="v")
+        		if(voicejudge==true)
         			{
 								cord.stop();
 								cord.save();
 								voicejudge=false;
-							}
+					}
         }
     };
     public void get(List<Double> tx,List<Double> ty,int temp[])
@@ -209,7 +216,8 @@ public class drawcontroller {
 		voicejudge=false;
 		canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,paint1);
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,send);
-        canvas.addEventHandler(KeyEvent.KEY_TYPED, voice);
+        canvas.addEventHandler(KeyEvent.KEY_PRESSED, voice_press);
+        canvas.addEventHandler(KeyEvent.KEY_RELEASED, voice_release);
       //鎸変綇A閿拰F閿垎鍒缉灏忓拰澧炲ぇ鐢荤瑪灏哄
         mainpane.getChildren().add(canvas);
         Scene scene = new Scene(mainpane);
