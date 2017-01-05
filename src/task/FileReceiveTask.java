@@ -93,9 +93,9 @@ public class FileReceiveTask implements Runnable {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					byte [] b = new byte[4096]; 
-					long times = file.length() / 4096;
-					long left = file.length() % 4096;
+					byte [] b = new byte[40960]; 
+					long times = file.length() / 40960;
+					long left = file.length() % 40960;
 					byte [] b_left = new byte[(int)left];
 					if (left != 0)
 						times++;	
@@ -103,7 +103,7 @@ public class FileReceiveTask implements Runnable {
 						RandomAccessFile ra = new RandomAccessFile(file, "r");
 						for (int i = 0; i < times;i++){
 							if (i != times - 1){
-								ra.seek(i * 4096); 
+								ra.seek(i * 40960); 
 								ra.read(b);
 								ArrayList<Object> pack = new ArrayList<>();
 								pack.add(2);
@@ -117,7 +117,7 @@ public class FileReceiveTask implements Runnable {
 								out.flush();
 							}									
 							else {
-								ra.seek(i * 4096); 
+								ra.seek(i * 40960); 
 								ra.read(b_left);
 								ArrayList<Object> pack = new ArrayList<>();
 								pack.add(2);
@@ -167,7 +167,7 @@ public class FileReceiveTask implements Runnable {
 				if (!f.exists()) f.mkdirs();
 				path += fd.getFilename();
 				RandomAccessFile rs = new RandomAccessFile(path, "rw");
-				rs.seek(order * 4096);
+				rs.seek(order * 40960);
 				rs.write(b);
 				rs.close();
 			}
