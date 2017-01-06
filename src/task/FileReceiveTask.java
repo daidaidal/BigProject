@@ -41,7 +41,7 @@ public class FileReceiveTask implements Runnable {
 	}
 	private void filereader(String name,String index){
 		BufferedInputStream bufferinput = null;
-		byte[] b = new byte[81920];
+		byte[] b = new byte[81920*4];
 		String path = "c://bigproject" + "//" + index + "//";
 		File f = new File(path);
 		if (!f.exists()) f.mkdirs();
@@ -103,6 +103,7 @@ public class FileReceiveTask implements Runnable {
 				});
 				int choice = ch.get();
 				ch = new ChoiceHolder();
+				ms = new Message3Service(ch);
 				System.out.println("choice get");
 				ArrayList<Object> pack = new ArrayList<>();
 				pack.add(-2);
@@ -126,6 +127,7 @@ public class FileReceiveTask implements Runnable {
 				System.out.println("-2 get");
 				String choice = (String)data.get(3);
 				if (choice.equals("y")){
+					mApp.getfTask().setSwitcher(0);
 					String index = mApp.getIndex();
 					File file = fileMap.get(index);
 					ArrayList<Object> pack0 = new ArrayList<>();
@@ -136,40 +138,44 @@ public class FileReceiveTask implements Runnable {
 					pack0.add(file.getName());
 					pack0.add(file.length());
 					pack0.add(1);
-					ObjectOutputStream out0 = new ObjectOutputStream(socket.getOutputStream());
-					out0.writeObject(pack0);
-					out0.flush();
 					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e1) {
+						ObjectOutputStream out0 = new ObjectOutputStream(socket.getOutputStream());
+						out0.writeObject(pack0);
+						out0.flush();
+					} catch (IOException e) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						e.printStackTrace();
 					}
-					mApp.getfTask().setSwitcher(0);
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					byte [] b = new byte[40960]; 
 					long times = file.length() / 40960;
 					long left = file.length() % 40960;
-					byte [] b_left = new byte[(int)left];
+					byte [] b_left = new byte[(int)left+10];
 					if (left != 0)
 						times++;	
 					try {
 						RandomAccessFile ra = new RandomAccessFile(file, "r");
 						for (int i = 0; i < times;i++){
 							if (i != times - 1){
-								ra.seek(i * 40960); 
+								ra.seek(i * 40960);
 								ra.read(b);
 								BufferedOutputStream outputStream = new BufferedOutputStream(socket.getOutputStream());
 								outputStream.write(b);
 								outputStream.flush();
 								try {
-									Thread.sleep(100);
+									Thread.sleep(500);
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}									
 							else {
-								ra.seek(i * 40960); 
+								ra.seek(i * 40960);
 								int temp = ra.read(b_left);
 								byte c = 'a';
 								for (int j = 0;j < 10;j++){
@@ -178,11 +184,17 @@ public class FileReceiveTask implements Runnable {
 								}
 								BufferedOutputStream outputStream = new BufferedOutputStream(socket.getOutputStream());
 								outputStream.write(b_left);
-								outputStream.flush();								
+								outputStream.flush();
 							}	
 						}
 						ra.close();
 						System.out.println("file out");
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						FileKeepTask fTask = new FileKeepTask(socket);
 						mApp.setfTask(fTask);
 						mApp.getCachedThreadPool().execute(fTask);

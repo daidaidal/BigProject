@@ -26,6 +26,7 @@ public class FileKeepTask implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println("new heart beat");
 		ObjectOutputStream outputStream;
 		while (switcher == 1)
 		{
@@ -47,6 +48,7 @@ public class FileKeepTask implements Runnable {
 			}
 			if (Thread.interrupted()) break;
 		}
+		System.out.println("heart beat stoped");
 	}
 
 }
