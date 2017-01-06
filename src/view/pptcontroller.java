@@ -72,7 +72,7 @@ public class pptcontroller {
 					cord.stop();
 					cord.save();
 					File file = new File("./src/record/1.mp3");
-					filesender(file, 1);
+					filesender(file, 1,"0");
 					File f = new File("./src/record/1.mp3");  // 输入要删除的文件位置
 	            	if(f.exists())
 	            	    f.delete();
@@ -94,39 +94,40 @@ public class pptcontroller {
             if(me.getX()>300)
             {
             	if(count<number)
-            	{	count++;
-            	image = new Image("/image/"+String.valueOf(count)+".png");
-            	iv.setImage(image);
-            	pptpane.getChildren().remove(iv);
-            	pptpane.getChildren().add(iv);
-            	
-              	File file = new File("/image/"+String.valueOf(count)+".png");
-            	filesender(file,0);
-            	
-            	
+            	{	
+	            	count++;
+	            	image = new Image("/image/"+String.valueOf(count)+".png");
+	            	iv.setImage(image);
+	            	pptpane.getChildren().remove(iv);
+	            	pptpane.getChildren().add(iv);           	
+	              	File file = new File("./src/image/"+String.valueOf(count)+".png");
+	            	filesender(file,0,String.valueOf(count));      	
             	//pptStage.setScene(scene);
             	}
             }
             else if(me.getX()<300)
             {
-            	if(count>1)
-            		{count--;
-            	image = new Image("/image/"+String.valueOf(count)+".png");
-            	iv.setImage(image);
-            	pptpane.getChildren().remove(iv);
-            	pptpane.getChildren().add(iv);
-            	pptStage.setScene(scene);}
+            	if(count>1) {
+	            	count--;
+	            	image = new Image("/image/"+String.valueOf(count)+".png");
+	            	iv.setImage(image);
+	            	pptpane.getChildren().remove(iv);
+	            	pptpane.getChildren().add(iv);
+	            	pptStage.setScene(scene);
+	            	File file = new File("./src/image/"+String.valueOf(count)+".png");
+	            	filesender(file,0,String.valueOf(count));
+            	}
             }
-            }
+        }
     };
-    private void filesender(File file,int voi){
+    private void filesender(File file,int voi,String count){
     	Socket fSocket = mainApp.getfSocket();
     	mainApp.getfTask().setSwitcher(0);
 		ArrayList<Object> pack0 = new ArrayList<>();
 		pack0.add(2);
 		pack0.add(mainApp.getPerson().getId());
 		pack0.add(hisid);
-		pack0.add("1");
+		pack0.add(count);
 		pack0.add(file.getName());
 		pack0.add(voi);
 		try {
@@ -214,7 +215,7 @@ public class pptcontroller {
         iv.setImage(image);
 		this.number=number;
 		File file = new File("./src/image/1.png");
-		filesender(file,0);
+		filesender(file,0,"1");
 		pptpane.getChildren().add(iv);
 		if(judge==false)
 			pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
