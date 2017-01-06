@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -40,6 +41,7 @@ import view.editcontroller;
 import view.jianquncontroller;
 import view.logincontroller;
 import view.mainviewcontroller;
+import view.pptcontroller;
 import view.signincontroller;
 
 public class MainApp extends Application {
@@ -58,6 +60,7 @@ public class MainApp extends Application {
     private Person person;
     private ExecutorService cachedThreadPool;
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
+    private pptcontroller p;
     
     public void setFriendsData(ObservableList<Person> friendsData){
     	this.friendsData=friendsData;
@@ -331,8 +334,36 @@ public class MainApp extends Application {
 		}
 		
     }
-    
-    
+    public void showppt(String hisid){
+    	int number=0;
+        	PptService p = new PptService();
+        	try {
+    			FXMLLoader loader = new FXMLLoader();
+    			loader.setLocation(MainApp.class.getResource("/view/ppt.fxml"));
+    			StackPane pptpane = (StackPane) loader.load();
+    			// Create the dialog Stage.
+    			//Stage primaryStage = new Stage();
+    			Stage pptStage = new Stage();
+    			pptStage.setTitle("edit");
+    			pptStage.initModality(Modality.WINDOW_MODAL);
+
+    			// Set the person into the controller.
+    			pptcontroller controller = loader.getController();
+    			controller.setMainApp(this);
+    			controller.init("1",number,pptpane,pptStage,hisid,true);
+    			this.p=controller;
+    			
+
+    		} catch (IOException e) {
+                e.printStackTrace();
+            }
+            //openFile(file);
+        
+    }
+    public void setpptpicture(String count)
+    {
+    	p.setpptpicture(count);
+    }
     public void showdraw(String hisid)
     {
     	try {

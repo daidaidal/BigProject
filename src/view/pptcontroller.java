@@ -37,6 +37,7 @@ public class pptcontroller {
 	private MyRecord cord;
 	private MainApp mainApp;
 	private String hisid;
+	private boolean judge=false;
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -196,23 +197,34 @@ public class pptcontroller {
 			e.printStackTrace();
 		}
     }
-	public void init(String path,int number,StackPane pptpane,Stage pptStage,String hisid)
+    public void setpptpicture(String count)
+    {
+    	image = new Image("/image/"+count+".png");
+    	iv.setImage(image);
+    	pptpane.getChildren().remove(iv);
+    	pptpane.getChildren().add(iv);
+    }
+	public void init(String path,int number,StackPane pptpane,Stage pptStage,String hisid,boolean judge)
 	{
 		this.pptpane=pptpane;
 		this.pptStage=pptStage;
-		
+		this.hisid = hisid;
 		image = new Image("/image/1.png");
 	    iv = new ImageView();
         iv.setImage(image);
 		this.number=number;
-		File file = new File("/image/1.png");
+		File file = new File("./src/image/1.png");
 		filesender(file,0);
 		pptpane.getChildren().add(iv);
-		pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
+		if(judge==false)
+			pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
 		//pptpane.addEventHandler(eventType, eventHandler);
 		scene = new Scene(pptpane);
-		scene.addEventHandler(KeyEvent.KEY_TYPED, voice);
-		scene.addEventHandler(KeyEvent.KEY_TYPED, play);
+		if(judge==false)
+		{
+			scene.addEventHandler(KeyEvent.KEY_TYPED, voice);
+			scene.addEventHandler(KeyEvent.KEY_TYPED, play);
+		}
 		pptStage.setScene(scene);
 		pptStage.show();
 	}

@@ -29,6 +29,7 @@ public class FileReceiveTask implements Runnable {
 	private String id;
 	private Message3Service ms;
 	private ChoiceHolder ch;
+	private boolean pop = true;
 	
 	public FileReceiveTask(HashMap<String, File> fileMap, Socket socket, MainApp mApp, String id, Message3Service ms,
 			ChoiceHolder ch) {
@@ -270,13 +271,13 @@ public class FileReceiveTask implements Runnable {
 				System.out.println("1 get");
 				filereader(name, index);
 			}
-			else if(mode == 2){//tupian
+			else if(mode == 2){//tupian yuyin
 				String name = (String) data.get(4);
 				String count = (String) data.get(3);
 				int voi = (int) data.get(5);//0 tupian 1 yuyin
 				String path = null;
 				if (voi == 0)
-					path = "./src/image/"+count+".png";
+					path = "./src/image/";
 				else
 					path = "./src/record/1.mp3";
 				addedfilereader(name, path);
@@ -288,6 +289,23 @@ public class FileReceiveTask implements Runnable {
 						}
 					});
 					thread.start();
+				}
+				else{
+					if (pop){
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	mApp.showppt(null);
+						    }
+						});	
+						pop = false;
+					}
+					Platform.runLater(new Runnable() {
+					    @Override
+					    public void run() {
+					    	mApp.setpptpicture(count);
+					    }
+					});	
 				}
 			}
 			else if(mode == 3){
