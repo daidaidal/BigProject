@@ -136,6 +136,12 @@ public class FileReceiveTask implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		try {
+			rs.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("file get");
 	}
 	@SuppressWarnings("unchecked")

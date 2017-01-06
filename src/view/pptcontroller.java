@@ -96,8 +96,8 @@ public class pptcontroller {
             	if(count<number)
             	{	count++;
             	image = new Image("/image/"+String.valueOf(count)+".png");
-            	iv.setImage(image);
             	pptpane.getChildren().remove(iv);
+            	iv.setImage(image);
             	pptpane.getChildren().add(iv);
             	
               	File file = new File("/image/"+String.valueOf(count)+".png");
@@ -112,10 +112,10 @@ public class pptcontroller {
             	if(count>1)
             		{count--;
             	image = new Image("/image/"+String.valueOf(count)+".png");
-            	iv.setImage(image);
             	pptpane.getChildren().remove(iv);
+            	iv.setImage(image);
             	pptpane.getChildren().add(iv);
-            	pptStage.setScene(scene);}
+            	}
             }
             }
     };
@@ -199,13 +199,16 @@ public class pptcontroller {
     }
     public void setpptpicture(String count)
     {
+    	System.out.println("count:"+count);
     	image = new Image("/image/"+count+".png");
-    	iv.setImage(image);
     	pptpane.getChildren().remove(iv);
+    	iv.setImage(image);
     	pptpane.getChildren().add(iv);
     }
 	public void init(String path,int number,StackPane pptpane,Stage pptStage,String hisid,boolean judge)
 	{
+		//调试ppt
+		System.out.println("init");
 		this.pptpane=pptpane;
 		this.pptStage=pptStage;
 		this.hisid = hisid;
@@ -213,8 +216,9 @@ public class pptcontroller {
 	    iv = new ImageView();
         iv.setImage(image);
 		this.number=number;
-		File file = new File("./src/image/1.png");
+		/*File file = new File("./src/image/1.png");
 		filesender(file,0);
+		*/
 		pptpane.getChildren().add(iv);
 		if(judge==false)
 			pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
@@ -227,5 +231,7 @@ public class pptcontroller {
 		}
 		pptStage.setScene(scene);
 		pptStage.show();
+		//调试ppt
+		System.out.println("after init");
 	}
 }
