@@ -363,7 +363,8 @@ public class mainviewcontroller {
 
     			// Set the person into the controller.
     			pptcontroller controller = loader.getController();
-    			controller.init("1",number,pptpane,pptStage);
+    			controller.init("1",number,pptpane,pptStage,friendsidLabel.getText());
+    			controller.setMainApp(mainapp);
 
     		} catch (IOException e) {
                 e.printStackTrace();

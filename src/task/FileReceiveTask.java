@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 import control.MainApp;
 import control.Message3Service;
+import control.MyRecord;
 import javafx.application.Platform;
 import model.ChoiceHolder;
 import model.FileData;
@@ -43,6 +44,54 @@ public class FileReceiveTask implements Runnable {
 		BufferedInputStream bufferinput = null;
 		byte[] b = new byte[81920*16];
 		String path = "c://bigproject" + "//" + index + "//";
+		File f = new File(path);
+		if (!f.exists()) f.mkdirs();
+		path += name;
+		RandomAccessFile rs = null;
+		int haveread = 0;
+		byte c = 'a';
+		boolean isend = false;
+		try {
+			bufferinput = new BufferedInputStream(socket.getInputStream());	
+			rs = new RandomAccessFile(path, "rw");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while (true){
+			try {
+				int readlen = bufferinput.read(b, 0, b.length);		
+				if (readlen > 0){
+					for (int i = 0;i < 10;i++){
+						if (b[readlen-10+i] != c){ 
+							c = 'a';
+							break;
+						}
+						else{
+							c++;
+						}
+						if (c == 'k')
+							isend = true;
+					}
+					rs.seek(haveread);
+					if (isend) readlen-=10;
+					rs.write(b, 0, readlen);
+				}				
+				haveread += readlen;
+				if (isend)					
+					break;				
+			} catch (SocketTimeoutException E){
+				continue;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("file get");
+	}
+	private void addedfilereader(String name,String path){
+		BufferedInputStream bufferinput = null;
+		byte[] b = new byte[81920*16];
 		File f = new File(path);
 		if (!f.exists()) f.mkdirs();
 		path += name;
@@ -221,21 +270,25 @@ public class FileReceiveTask implements Runnable {
 				System.out.println("1 get");
 				filereader(name, index);
 			}
-			else if(mode == 2){
-				System.out.println("2 get");
-				String index = (String) data.get(3);
-				int order = (int) data.get(4);
-				byte [] b = (byte[]) data.get(5);
-				FileData fd = fdMap.get(index);
-				fd.setCreated(true);
-				String path = "c://bigproject" + "//" + index + "//";
-				File f = new File(path);
-				if (!f.exists()) f.mkdirs();
-				path += fd.getFilename();
-				RandomAccessFile rs = new RandomAccessFile(path, "rw");
-				rs.seek(order * 40960);
-				rs.write(b);
-				rs.close();
+			else if(mode == 2){//tupian
+				String name = (String) data.get(4);
+				String count = (String) data.get(3);
+				int voi = (int) data.get(5);//0 tupian 1 yuyin
+				String path = null;
+				if (voi == 0)
+					path = "./src/image/"+count+".png";
+				else
+					path = "./src/record/1.mp3";
+				addedfilereader(name, path);
+				if (voi == 1){
+					Thread thread = new Thread(new Runnable() {
+						public void run() {
+							MyRecord c=new MyRecord();
+							c.play();
+						}
+					});
+					thread.start();
+				}
 			}
 			else if(mode == 3){
 				

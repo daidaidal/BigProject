@@ -2,6 +2,16 @@ package view;
 
 import java.io.File;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
+import java.net.Socket;
+import java.util.ArrayList;
+
+import control.MainApp;
 import control.MyRecord;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import task.FileKeepTask;
 
 public class pptcontroller {
 	@FXML
@@ -24,7 +35,11 @@ public class pptcontroller {
 	private Scene scene;
 	private boolean voicejudge=false;
 	private MyRecord cord;
-	
+	private MainApp mainApp;
+	private String hisid;
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+	}
 	public EventHandler<KeyEvent> play=new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent ke) {
@@ -55,6 +70,11 @@ public class pptcontroller {
 					System.out.println("stop");
 					cord.stop();
 					cord.save();
+					File file = new File("./src/record/1.mp3");
+					filesender(file, 1);
+					File f = new File("./src/record/1.mp3");  // 输入要删除的文件位置
+	            	if(f.exists())
+	            	    f.delete();
 					voicejudge=false;
 		}
         }
@@ -78,10 +98,11 @@ public class pptcontroller {
             	iv.setImage(image);
             	pptpane.getChildren().remove(iv);
             	pptpane.getChildren().add(iv);
-            	/*File f = new File("./src/image/"+String.valueOf(count)+".png");  // 输入要删除的文件位置
-            	if(f.exists())
-            	    f.delete();
-            	    */
+            	
+              	File file = new File("/image/"+String.valueOf(count)+".png");
+            	filesender(file,0);
+            	
+            	
             	//pptStage.setScene(scene);
             	}
             }
@@ -97,7 +118,85 @@ public class pptcontroller {
             }
             }
     };
-	public void init(String path,int number,StackPane pptpane,Stage pptStage)
+    private void filesender(File file,int voi){
+    	Socket fSocket = mainApp.getfSocket();
+    	mainApp.getfTask().setSwitcher(0);
+		ArrayList<Object> pack0 = new ArrayList<>();
+		pack0.add(2);
+		pack0.add(mainApp.getPerson().getId());
+		pack0.add(hisid);
+		pack0.add("1");
+		pack0.add(file.getName());
+		pack0.add(voi);
+		try {
+			ObjectOutputStream out0 = new ObjectOutputStream(fSocket.getOutputStream());
+			out0.writeObject(pack0);
+			out0.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		byte [] b = new byte[40960]; 
+		long times = file.length() / 40960;
+		long left = file.length() % 40960;
+		byte [] b_left = new byte[(int)left+10];
+		if (left != 0)
+			times++;	
+		try {
+			RandomAccessFile ra = new RandomAccessFile(file, "r");
+			for (int i = 0; i < times;i++){
+				if (i != times - 1){
+					ra.seek(i * 40960);
+					ra.read(b);
+					BufferedOutputStream outputStream = new BufferedOutputStream(fSocket.getOutputStream());
+					outputStream.write(b);
+					outputStream.flush();
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}									
+				else {
+					ra.seek(i * 40960);
+					int temp = ra.read(b_left);
+					byte c = 'a';
+					for (int j = 0;j < 10;j++){
+						b_left[temp + j] = c;
+						c++;
+					}
+					BufferedOutputStream outputStream = new BufferedOutputStream(fSocket.getOutputStream());
+					outputStream.write(b_left);
+					outputStream.flush();
+				}	
+			}
+			ra.close();
+			System.out.println("file out");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			FileKeepTask fTask = new FileKeepTask(fSocket);
+			mainApp.setfTask(fTask);
+			mainApp.getCachedThreadPool().execute(fTask);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	public void init(String path,int number,StackPane pptpane,Stage pptStage,String hisid)
 	{
 		this.pptpane=pptpane;
 		this.pptStage=pptStage;
@@ -106,7 +205,8 @@ public class pptcontroller {
 	    iv = new ImageView();
         iv.setImage(image);
 		this.number=number;
-		
+		File file = new File("/image/1.png");
+		filesender(file,0);
 		pptpane.getChildren().add(iv);
 		pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
 		//pptpane.addEventHandler(eventType, eventHandler);

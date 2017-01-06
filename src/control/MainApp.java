@@ -69,6 +69,9 @@ public class MainApp extends Application {
     {
     }
     
+	public Socket getfSocket() {
+		return fSocket;
+	}
 	public ExecutorService getCachedThreadPool() {
 		return cachedThreadPool;
 	}
