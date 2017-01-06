@@ -29,6 +29,7 @@ import model.ChoiceHolder;
 import model.Person;
 import task.DrawKeepTask;
 import task.DrawReceiveTask;
+import task.FileKeepTask;
 import task.FileReceiveTask;
 import task.KeepTask;
 import task.SingalTask;
@@ -43,6 +44,7 @@ import view.signincontroller;
 
 public class MainApp extends Application {
 
+	private FileKeepTask fTask;
 	private String index;
 	private int filenum = 0;
 	private HashMap<String, File> fileMap = new HashMap<>();
@@ -67,6 +69,15 @@ public class MainApp extends Application {
     {
     }
     
+	public ExecutorService getCachedThreadPool() {
+		return cachedThreadPool;
+	}
+	public void setfTask(FileKeepTask fTask) {
+		this.fTask = fTask;
+	}
+	public FileKeepTask getfTask() {
+		return fTask;
+	}
 	public String getIndex() {
 		return index;
 	}
@@ -226,11 +237,11 @@ public class MainApp extends Application {
             ObjectOutputStream out1 = new ObjectOutputStream(fSocket.getOutputStream());
             out1.writeObject(pack1);
             out1.flush();
-			DrawKeepTask fkp = new DrawKeepTask(fSocket);
+			fTask = new FileKeepTask(fSocket);
 			ChoiceHolder ch1 = new ChoiceHolder();
 			Message3Service ms1 = new Message3Service(ch1);
 			FileReceiveTask frt =  new FileReceiveTask(fileMap, fSocket, this, person.getId(), ms1, ch1);
-			cachedThreadPool.execute(fkp);
+			cachedThreadPool.execute(fTask);
 			cachedThreadPool.execute(frt);
             // Show the dialog and wait until the user closes it
             primaryStage.show();
