@@ -148,6 +148,7 @@ public class drawcontroller {
         	if(ke.getCharacter()=="v")
         		if(voicejudge==false)
         			{
+        						System.out.println("start");
 								cord.capture();
 								voicejudge=true;
         			}
@@ -160,6 +161,7 @@ public class drawcontroller {
         	if(ke.getCharacter()=="v")
         		if(voicejudge==true)
         			{
+        						System.out.println("stop");
 								cord.stop();
 								cord.save();
 								voicejudge=false;
