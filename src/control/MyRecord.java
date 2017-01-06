@@ -172,7 +172,7 @@ public class MyRecord
             {//如果文件不存在，则创建该目录
                 filePath.mkdir();
             }
-            file = new File(filePath.getPath()+"/"+"1.mp3");
+            file = new File("./src/record/1.mp3");
             AudioSystem.write(ais, AudioFileFormat.Type.WAVE, file);
         } catch (Exception e) {
             e.printStackTrace();

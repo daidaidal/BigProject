@@ -60,7 +60,7 @@ public class MainApp extends Application {
     private Person person;
     private ExecutorService cachedThreadPool;
     private ObservableList<Person> friendsData = FXCollections.observableArrayList();
-    private pptcontroller p;
+    private pptcontroller p=null;
     
     public void setFriendsData(ObservableList<Person> friendsData){
     	this.friendsData=friendsData;
@@ -345,13 +345,16 @@ public class MainApp extends Application {
     			//Stage primaryStage = new Stage();
     			Stage pptStage = new Stage();
     			pptStage.setTitle("edit");
-    			pptStage.initModality(Modality.WINDOW_MODAL);
 
     			// Set the person into the controller.
     			pptcontroller controller = loader.getController();
-    			controller.setMainApp(this);
-    			controller.init("1",number,pptpane,pptStage,hisid,true);
     			this.p=controller;
+    			controller.setMainApp(this);
+    			//调试ppt
+    			System.out.println("before init");
+    			controller.init("1",number,pptpane,pptStage,hisid,true);
+    			
+    			
     			
 
     		} catch (IOException e) {

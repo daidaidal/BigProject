@@ -200,13 +200,16 @@ public class pptcontroller {
     }
     public void setpptpicture(String count)
     {
+    	System.out.println("count:"+count);
     	image = new Image("/image/"+count+".png");
-    	iv.setImage(image);
     	pptpane.getChildren().remove(iv);
+    	iv.setImage(image);
     	pptpane.getChildren().add(iv);
     }
 	public void init(String path,int number,StackPane pptpane,Stage pptStage,String hisid,boolean judge)
 	{
+		//调试ppt
+		System.out.println("init");
 		this.pptpane=pptpane;
 		this.pptStage=pptStage;
 		this.hisid = hisid;
@@ -216,6 +219,7 @@ public class pptcontroller {
 		this.number=number;
 		File file = new File("./src/image/1.png");
 		filesender(file,0,"1");
+
 		pptpane.getChildren().add(iv);
 		if(judge==false)
 			pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
@@ -228,5 +232,7 @@ public class pptcontroller {
 		}
 		pptStage.setScene(scene);
 		pptStage.show();
+		//调试ppt
+		System.out.println("after init");
 	}
 }
