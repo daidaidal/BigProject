@@ -11,5 +11,9 @@
 	<classpathentry kind="lib" path="poi-ooxml-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="poi-ooxml-schemas-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="poi-scratchpad-3.6-20091214.jar"/>
+	<classpathentry kind="lib" path="customizer.jar"/>
+	<classpathentry kind="lib" path="jmf.jar"/>
+	<classpathentry kind="lib" path="mediaplayer.jar"/>
+	<classpathentry kind="lib" path="multiplayer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

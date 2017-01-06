@@ -41,7 +41,7 @@ public class FileReceiveTask implements Runnable {
 	}
 	private void filereader(String name,String index){
 		BufferedInputStream bufferinput = null;
-		byte[] b = new byte[81920*4];
+		byte[] b = new byte[81920*16];
 		String path = "c://bigproject" + "//" + index + "//";
 		File f = new File(path);
 		if (!f.exists()) f.mkdirs();

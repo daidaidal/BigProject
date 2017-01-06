@@ -1,10 +1,12 @@
 package view;
 
+import control.MyRecord;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -18,8 +20,47 @@ public class pptcontroller {
 	private Image image;
 	private ImageView iv;
 	private Scene scene;
+	private boolean voicejudge=false;
+	private MyRecord cord;
+	
+	public EventHandler<KeyEvent> play=new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent ke) {
+        	System.out.println("start");
+        	if(ke.getCharacter().equals("p"))
+        	{
+        		MyRecord cord1=new MyRecord();
+        		cord1.play();
+        	}
+        		
+        }
+    };
+    
+	public EventHandler<KeyEvent> voice=new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent ke) {
+        	System.out.println("start");
+        	if(ke.getCharacter().equals("v"))
+        		if(voicejudge==false)
+        			{
+        						System.out.println("start");
+        						cord=new MyRecord();
+								cord.capture();
+								voicejudge=true;
+        			}
+        		else if(voicejudge==true)
+    			{
+					System.out.println("stop");
+					cord.stop();
+					cord.save();
+					voicejudge=false;
+		}
+        }
+    };
+    
 	@FXML
 	private void initialize() {
+		
     }
 	
 	public pptcontroller(){
@@ -64,6 +105,8 @@ public class pptcontroller {
 		pptpane.addEventHandler(MouseEvent.MOUSE_CLICKED, change);
 		//pptpane.addEventHandler(eventType, eventHandler);
 		scene = new Scene(pptpane);
+		scene.addEventHandler(KeyEvent.KEY_TYPED, voice);
+		scene.addEventHandler(KeyEvent.KEY_TYPED, play);
 		pptStage.setScene(scene);
 		pptStage.show();
 	}
