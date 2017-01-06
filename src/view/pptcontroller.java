@@ -1,5 +1,7 @@
 package view;
 
+import java.io.File;
+
 import control.MyRecord;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -76,6 +78,10 @@ public class pptcontroller {
             	iv.setImage(image);
             	pptpane.getChildren().remove(iv);
             	pptpane.getChildren().add(iv);
+            	/*File f = new File("./src/image/"+String.valueOf(count)+".png");  // 输入要删除的文件位置
+            	if(f.exists())
+            	    f.delete();
+            	    */
             	//pptStage.setScene(scene);
             	}
             }
