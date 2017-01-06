@@ -98,7 +98,6 @@
                                                       <Button layoutX="440.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleshowppt" text="文稿" />
                                                       <Button layoutX="520.0" layoutY="342.0" mnemonicParsing="false" onAction="#handledraw" text="画板" />
                                                       <Button layoutX="358.0" layoutY="342.0" mnemonicParsing="false" onAction="#handledocument" text="文件" />
-                                                      <Button layoutX="277.0" layoutY="342.0" mnemonicParsing="false" text="语音" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>

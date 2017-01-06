@@ -21,15 +21,15 @@
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="474.0" styleClass="anchor-pane">
                <children>
                   <Label layoutX="37.0" layoutY="27.0" text="人/群：" />
-                  <Label fx:id="ren_qunLabel" layoutX="130.0" layoutY="27.0" text="Label" />
+                  <Label fx:id="ren_qunLabel" layoutX="130.0" layoutY="27.0" />
                   <Label layoutX="37.0" layoutY="67.0" text="名字：" />
                   <Label layoutX="37.0" layoutY="106.0" text="公司：" />
                   <Label layoutX="37.0" layoutY="146.0" text="email：" />
                   <Button layoutX="359.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleJoin" text="加入" />
-                  <Label fx:id="nameLabel" layoutX="130.0" layoutY="67.0" text="Label" />
-                  <Label fx:id="companyLabel" layoutX="130.0" layoutY="106.0" text="Label" />
-                  <Label fx:id="emailLabel" layoutX="130.0" layoutY="146.0" text="Label" />
-                  <Label fx:id="messageLabel" layoutX="130.0" layoutY="178.0" text="Label" />
+                  <Label fx:id="nameLabel" layoutX="130.0" layoutY="67.0" />
+                  <Label fx:id="companyLabel" layoutX="130.0" layoutY="106.0" />
+                  <Label fx:id="emailLabel" layoutX="130.0" layoutY="146.0" />
+                  <Label fx:id="messageLabel" layoutX="130.0" layoutY="178.0" />
                </children>
             </AnchorPane>
         </items>

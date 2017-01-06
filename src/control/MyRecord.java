@@ -80,16 +80,40 @@ public class MyRecord
     public void play()
     {
     	//将baos中的数据转换为字节数捿
+    	FileInputStream fi=null;
     	baos = new ByteArrayOutputStream();
 		File file = new File("./src/record/1.mp3");
+		long fileSize = file.length();
 		try {
-			FileInputStream fis = new FileInputStream(file);
+			fi = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			System.out.println("fail open");
 		}
-        byte audioData[] = baos.toByteArray();
+		
+        byte audioData[] = new byte[(int) fileSize];  
+        int offset = 0;  
+        int numRead = 0;  
+        try {
+			while (offset < audioData.length  
+			&& (numRead = fi.read(audioData, offset, audioData.length - offset)) >= 0) {  
+			    offset += numRead;  
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+        // 确保所有数据均被读取  
+        if (offset != audioData.length) {  
+        	System.out.println("canque");
+        }  
+        try {
+			fi.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
         //转换为输入流
         bais = new ByteArrayInputStream(audioData);
         af = getAudioFormat();
