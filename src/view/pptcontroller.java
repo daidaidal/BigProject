@@ -217,9 +217,11 @@ public class pptcontroller {
 	    iv = new ImageView();
         iv.setImage(image);
 		this.number=number;
-		File file = new File("./src/image/1.png");
 		if(judge == false)
+		{
+			File file = new File("./src/image/1.png");
 			filesender(file,0,"1");
+		}
 
 		pptpane.getChildren().add(iv);
 		if(judge==false)
